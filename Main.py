@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 2
+    Level = 3 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -23,6 +23,14 @@ if sleep_mode == 'up':
     y1 = 25
     x2 = 60
     y2 = 60
+    CoinPosX = 45
+    CoinPosY = 20
+    index = 0
+    level_on = 'Level: ' + str(Level)
+    coins = random.randint(0, 99)
+    Coins = 'coins: ' + str(coins)
+    num_text = []
+    coin_text = []
 
     # to get the Window, we need this code and you can name your game anything you want
     Window = Tk()
@@ -69,16 +77,26 @@ if sleep_mode == 'up':
                 position[2] >= 1440
                 ):
                 self.x = 0
+                if position[0] <= 0:
+                    self.canvas.move(self.id, 9, 0)
+                elif position[2] >= 1440:
+                    self.canvas.move(self.id, -9, 0)
 
             if (position[1] <= 0 or
                 position[3] >= 850
                 ):
                 self.y = 0
+                if position[1] <= 0:
+                    self.canvas.move(self.id, 0, 9)
+                elif position[3] >= 850:
+                    self.canvas.move(self.id, 0, -9)
 
         def respawn(self):
             self.move = 'no'
             self.x = 0
             self.y = 0
+            self.canvas.move(self.id, self.position[2] * -1 + 60, self.position[3] * -1 + 60)
+            self.canvas.move(self.id, 680, 750)
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
@@ -115,15 +133,13 @@ if sleep_mode == 'up':
             self.y = 0
             self.player = player
             self.canvas = canvas
-            if (Level == 1 or
-                Level == 2 or
-                Level == 3
+            if (Level in levels
                 ):
                 self.canvas.move(self.id, 680, 0)
                 self.visible = True
                 self.x = 3
             else:
-                self.canvas.move(self.id, random.randint(0, WIN_WIDTH), random.randint(0, WIN_HEIGHT))
+                pass
 
         def draw(self):
             self.canvas.move(self.id, self.x, self.y)
@@ -136,17 +152,29 @@ if sleep_mode == 'up':
             self.xPos = self.GoalP[2]
             self.yPos = self.GoalP[3]
 
-            global Level
+            global Level, index
             if ((self.GoalP[0] <= self.player.Px) and (self.G1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.GoalP[1]):
                     if not (self.player.position[0] >= self.GoalP[2]):
                         player.respawn()
                         Level += 1
-                        if Level in levels:
+                        level_on = 'Level: ' + str(Level)
+                        coins = random.randint(0, 99)
+                        Coins = 'coins: ' + str(coins)
+                        COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+                        text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
+                        num_text.append(text)
+                        coin_text.append(COINS)
+                        canvas.delete(num_text[0])
+                        canvas.delete(coin_text[0])
+                        del num_text[0]
+                        del coin_text[0]
+                        if Level in levels and True:
                             self.x = 0
                             self.y = 0
-                            self.canvas.move(self.id, self.xPos, 0)
-                            self.canvas.move(self.id, 0, 0)
+                            self.canvas.move(self.id, self.GoalP[2] * -1 + 36, self.GoalP[3] * -1 + 36)
+                            self.canvas.move(self.id, 740 - 36, 60 - 36)
+                            self.x = 3
 
 
             if (pos[0] <= 0 or
@@ -158,9 +186,17 @@ if sleep_mode == 'up':
                 pos[3] >= 850
                 ):
                 self.y = self.y * -1
+            
+        def position(self):
+            self.x = 0
+            self.y = 0
+            self.canvas.move(self.id, self.GoalP[2] * -1 + 36, self.GoalP[3] * -1 + 36)
+            self.canvas.move(self.id, 740 - 36, 60 - 36)
+            self.x = 3
+
     # think stuff from player class to here:
     class Enemy:
-        def __init__(self, color, speed, player, canvas):
+        def __init__(self, color, speed, player, goal, canvas):
             self.id = canvas
             self.id = canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline=color)
             starts = [-10, -9, -8, -7, -6, -5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -169,6 +205,7 @@ if sleep_mode == 'up':
             self.canvas = canvas
             self.speed = speed
             self.player = player
+            self.goal = goal
             self.enemy_pos = self.canvas.coords(self.id)
             self.EnemyX = self.enemy_pos[0]
             self.EnemyY = self.enemy_pos[1]
@@ -194,6 +231,7 @@ if sleep_mode == 'up':
                     if not (self.player.position[0] >= self.EnemyP[2]):
                         move = 'no'
                         player.respawn()
+                        goal.position()
 
             #if sleep_mode == 'sleep':
                 #DirX = 0
@@ -215,12 +253,13 @@ if sleep_mode == 'up':
 
 
     class DangerStuff:
-        def __init__(self, color, player, canvas):
+        def __init__(self, color, player, goal, canvas):
             self.id = canvas
             self.id = canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline=color)
             self.x = 0
             self.y = 0
             self.player = player
+            self.goal = goal
             self.canvas = canvas
             if (Level == 3 or
                 Level == 4 or
@@ -229,8 +268,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 510)
             else:
                 self.canvas.move(self.id, 
-                                 random.randint(0, 1440), 
-                                 random.randint(0, 850))
+                                 2000, 
+                                 2000)
                 
         def draw(self):
             self.DsPos = self.canvas.coords(self.id)
@@ -243,15 +282,21 @@ if sleep_mode == 'up':
                 if not (self.player.position[3] <= self.DsPos[1]):
                     if not (self.player.position[0] >= self.DsPos[2]):
                         player.respawn()
+                        goal.position()
+                        if True:
+                            pass
 
     # we make the stuff here:
     if (Level in levels):
         player = Player('white', canvas)
         goal = Goal(light_green, player, canvas)
-        dangerstuff = DangerStuff(yellow, player, canvas)
-        enemy = Enemy(red, 2, player, canvas)
-        
-
+        dangerstuff = DangerStuff(yellow, player, goal, canvas)
+        enemy = Enemy(red, 2, player, goal, canvas)
+    
+    COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+    text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
+    num_text.append(text)
+    coin_text.append(COINS)
     # without the while True we do mainloop but i'll do while True instead:
     while True:
     # it sends a signal then the player or the goal will move but first it needs to detect if the level existed:
