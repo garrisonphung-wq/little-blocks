@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 1
+    Level = 2
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -133,6 +133,8 @@ if sleep_mode == 'up':
             self.Gy = self.GoalP[1]
             self.G1x = self.GoalP[0]
             self.G1y = self.GoalP[3]
+            self.xPos = self.GoalP[2]
+            self.yPos = self.GoalP[3]
 
             global Level
             if ((self.GoalP[0] <= self.player.Px) and (self.G1y >= self.player.Py)):
@@ -140,13 +142,11 @@ if sleep_mode == 'up':
                     if not (self.player.position[0] >= self.GoalP[2]):
                         player.respawn()
                         Level += 1
-                        # if (Level in levels):
-                            # i figured out that the self.canvas.move is not putting the squares at the right spot, their just actully moving it even more.
-                            # self.canvas.move(self.id, 680, 0)
-                            # self.visible = True
-                            # self.x = 3
-                        # else:
-                            # pass
+                        if Level in levels:
+                            self.x = 0
+                            self.y = 0
+                            self.canvas.move(self.id, self.xPos, 0)
+                            self.canvas.move(self.id, 0, 0)
 
 
             if (pos[0] <= 0 or
