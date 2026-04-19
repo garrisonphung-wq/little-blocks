@@ -12,12 +12,13 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 3 #random.randint(1, 25)
+    Level = 1 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
     red = "#FF0000"
     yellow = "#FCDB00"
+    yellow_green = "#C8FF00"
     move = 'yes'
     x1 = 25
     y1 = 25
@@ -152,7 +153,7 @@ if sleep_mode == 'up':
             self.xPos = self.GoalP[2]
             self.yPos = self.GoalP[3]
 
-            global Level, index
+            global Level, index, coins
             if ((self.GoalP[0] <= self.player.Px) and (self.G1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.GoalP[1]):
                     if not (self.player.position[0] >= self.GoalP[2]):
@@ -286,13 +287,45 @@ if sleep_mode == 'up':
                         if True:
                             pass
 
+    class COIN:
+        def __init__(self, color, player, goal, canvas):
+            self.id = canvas
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.goal = goal
+            self.canvas = canvas
+            self.id = canvas.create_oval(25, 25, 50, 50, fill=color, outline=color)
+            if Level == 1:
+                self.canvas.move(self.id, 685, 380)
+
+        def draw(self):
+            global coins
+            self.CoinP = self.canvas.coords(self.id)
+            self.Cx = self.CoinP[2]
+            self.Cy = self.CoinP[1]
+            self.C1x = self.CoinP[0]
+            self.C1y = self.CoinP[3]
+
+            if ((self.CoinP[0] <= self.player.Px) and (self.C1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.CoinP[1]):
+                    if not (self.player.position[0] >= self.CoinP[2]):
+                        self.canvas.move(self.id, 2000, 2000)
+                        coins += 1
+                        Coins = 'coins: ' + str(coins)
+                        COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+                        coin_text.append(COINS)
+                        canvas.delete(coin_text[0])
+                        del coin_text[0]
+
     # we make the stuff here:
     if (Level in levels):
         player = Player('white', canvas)
         goal = Goal(light_green, player, canvas)
         dangerstuff = DangerStuff(yellow, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
-    
+        coin = COIN(yellow_green, player, goal, canvas)
+
     COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
     text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
     num_text.append(text)
@@ -306,6 +339,7 @@ if sleep_mode == 'up':
             goal.draw()
             enemy.draw()
             dangerstuff.draw()
+            coin.draw()
             Window.update_idletasks()
             Window.update()
 
