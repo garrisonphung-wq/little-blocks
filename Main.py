@@ -305,7 +305,7 @@ if sleep_mode == 'up':
                 Level == 4 or
                 Level == 6
                 ):
-                self.canvas.move(self.id, 680, 380)
+                self.canvas.move(self.id, 2060, 2060)
             else:
                 self.canvas.move(self.id, 
                                  2000, 
@@ -317,6 +317,7 @@ if sleep_mode == 'up':
             self.Dsy = self.DsPos[1]
             self.Ds1x = self.DsPos[0]
             self.Ds1y = self.DsPos[3]
+            print(f'{self.DsPos[2]}, {self.DsPos[3]}')
             
             if ((self.DsPos[0] <= self.player.Px) and (self.Ds1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.DsPos[1]):
@@ -328,9 +329,11 @@ if sleep_mode == 'up':
 
         def Check(self):
             if Level == 3:
-                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -4000, -4000)
                 self.canvas.move(self.id, 0, 0)
                 self.canvas.move(self.id, 680, 380)
+                self.canvas.move(self.id, -1000, -1000)
+                self.canvas.move(self.id, 300 + 60, -240)
             if Level == 4:
                 self.canvas.move(self.id, -740, -440)
                 self.canvas.move(self.id, 60, 60)
@@ -360,7 +363,6 @@ if sleep_mode == 'up':
             self.Cy = self.CoinP[1]
             self.C1x = self.CoinP[0]
             self.C1y = self.CoinP[3]
-            print(f'{self.CoinP[2]}, {self.CoinP[3]}')
 
             if ((self.CoinP[0] <= self.player.Px) and (self.C1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.CoinP[1]):
