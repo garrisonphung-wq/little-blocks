@@ -28,17 +28,33 @@ if sleep_mode == 'up':
     CoinPosY = 20
     index = 0
     level_on = 'Level: ' + str(Level)
-    coins = random.randint(0, 99)
+    coins = 0 #random.randint(0, 99)
     Coins = 'coins: ' + str(coins)
     num_text = []
     coin_text = []
 
     # to get the Window, we need this code and you can name your game anything you want
     Window = Tk()
-    Window.title('Little Block')
+    Window.title('Blocky')
     canvas = Canvas(Window, width=WIN_WIDTH, height=WIN_HEIGHT, bg='black')
     canvas.pack()
     Window.update()
+
+    class WaveStarter:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 1460, 870, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, -21, -21)
+            self.canvas.move(self.id, 6000, 6000)
+
+        def ComeBack(self):
+            self.canvas.move(self.id, -6000, -6000)
+
+        def GetAway(self):
+            self.canvas.move(self.id, 6000, 6000)
 
     # for my player i use a class because it needs arrow keys to move and other stuff
     class Player:
@@ -127,12 +143,16 @@ if sleep_mode == 'up':
 
     # this is what the player go to, think stuff from the player class to here:
     class Goal:
-        def __init__(self, color, player, canvas):
+        def __init__(self, color, player, wavestarter, canvas):
             self.id = canvas
             self.id = canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline=color)
             self.x = 0
             self.y = 0
             self.player = player
+            #self.enemy = enemy
+            #self.dangerstuff = dangerstuff
+            #self.coin = coin
+            self.wavestarter = wavestarter
             self.canvas = canvas
             if (Level in levels
                 ):
@@ -170,12 +190,18 @@ if sleep_mode == 'up':
                         canvas.delete(coin_text[0])
                         del num_text[0]
                         del coin_text[0]
+                        time.sleep(1)
+                        # not usefull: wavestarter.ComeBack()
+                        enemy.Check()
+                        dangerstuff.Check()
+                        coin.Check()
                         if Level in levels and True:
                             self.x = 0
                             self.y = 0
                             self.canvas.move(self.id, self.GoalP[2] * -1 + 36, self.GoalP[3] * -1 + 36)
                             self.canvas.move(self.id, 740 - 36, 60 - 36)
                             self.x = 3
+                            # not use full: #wavestarter.GetAway()
 
 
             if (pos[0] <= 0 or
@@ -234,6 +260,19 @@ if sleep_mode == 'up':
                         player.respawn()
                         goal.position()
 
+        def Check(self):
+            if Level == 2:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 0)
+                self.canvas.move(self.id, 680, 380)
+            elif Level == 4:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 0)
+                self.canvas.move(self.id, 680, 60)
+            else:
+                self.canvas.move(self.id, -740.0, -440.0)
+                self.canvas.move(self.id, 2060, 2060)
+
             #if sleep_mode == 'sleep':
                 #DirX = 0
                 #DirY = 0
@@ -266,7 +305,7 @@ if sleep_mode == 'up':
                 Level == 4 or
                 Level == 6
                 ):
-                self.canvas.move(self.id, 680, 510)
+                self.canvas.move(self.id, 680, 380)
             else:
                 self.canvas.move(self.id, 
                                  2000, 
@@ -287,6 +326,21 @@ if sleep_mode == 'up':
                         if True:
                             pass
 
+        def Check(self):
+            if Level == 3:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 0)
+                self.canvas.move(self.id, 680, 380)
+            if Level == 4:
+                self.canvas.move(self.id, -740, -440)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 0, 0)
+                self.canvas.move(self.id, 680, 380)
+            else:
+                self.canvas.move(self.id, -740, -440)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
+
     class COIN:
         def __init__(self, color, player, goal, canvas):
             self.id = canvas
@@ -306,6 +360,7 @@ if sleep_mode == 'up':
             self.Cy = self.CoinP[1]
             self.C1x = self.CoinP[0]
             self.C1y = self.CoinP[3]
+            print(f'{self.CoinP[2]}, {self.CoinP[3]}')
 
             if ((self.CoinP[0] <= self.player.Px) and (self.C1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.CoinP[1]):
@@ -318,13 +373,22 @@ if sleep_mode == 'up':
                         canvas.delete(coin_text[0])
                         del coin_text[0]
 
+        def Check(self):
+            if Level == 2:
+                # took a break here: break started at 4:58 PM
+                self.canvas.move(self.id, -685, -380)
+                self.canvas.move(self.id, 50, 50)
+
     # we make the stuff here:
     if (Level in levels):
+        wavestarter = WaveStarter("#FFFFFF", canvas)
         player = Player('white', canvas)
-        goal = Goal(light_green, player, canvas)
-        dangerstuff = DangerStuff(yellow, player, goal, canvas)
+        goal = Goal(light_green, player, wavestarter, canvas)
+        dangerstuff = DangerStuff('orange', player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
+        #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
+        wavestarter = WaveStarter("#FFFFFF", canvas)
 
     COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
     text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
