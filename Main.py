@@ -19,6 +19,7 @@ if sleep_mode == 'up':
     red = "#FF0000"
     yellow = "#FCDB00"
     yellow_green = "#C8FF00"
+    orange = "#EB8806"
     move = 'yes'
     x1 = 25
     y1 = 25
@@ -386,7 +387,7 @@ if sleep_mode == 'up':
         wavestarter = WaveStarter("#FFFFFF", canvas)
         player = Player('white', canvas)
         goal = Goal(light_green, player, wavestarter, canvas)
-        dangerstuff = DangerStuff('orange', player, goal, canvas)
+        dangerstuff = DangerStuff(orange, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
