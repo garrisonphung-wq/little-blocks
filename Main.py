@@ -227,7 +227,8 @@ if sleep_mode == 'up':
         def __init__(self, color, speed, player, goal, canvas):
             self.id = canvas
             self.id = canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline=color)
-            starts = [-10, -9, -8, -7, -6, -5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            self.starts = [-10, -9, -8, -7, -6, -5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            self.stop = 'yes'
             self.x = 0
             self.y = 0
             self.canvas = canvas
@@ -247,6 +248,8 @@ if sleep_mode == 'up':
         def draw(self):
             # self.player.x
             # self.player.y
+            self.starts = [-5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5]
+            self.canvas.move(self.id, self.x, self.y)
             enemy_pos = self.canvas.coords(self.id)
             self.EnemyP = self.canvas.coords(self.id)
             self.Ex = self.EnemyP[2]
@@ -261,15 +264,24 @@ if sleep_mode == 'up':
                         player.respawn()
                         goal.position()
 
+            if self.EnemyP[0] <= 0 or self.EnemyP[2] >= 1440:
+                self.x = self.x * -1
+            elif self.EnemyP[1] <= 0 or self.EnemyP[3] >= 850:
+                self.y = self.y * -1
+
         def Check(self):
             if Level == 2:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 0)
                 self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.starts)
+                self.y = random.choice(self.starts)
             elif Level == 4:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 0)
                 self.canvas.move(self.id, 680, 60)
+                self.x = random.choice(self.starts)
+                self.y = random.choice(self.starts)
             else:
                 self.canvas.move(self.id, -740.0, -440.0)
                 self.canvas.move(self.id, 2060, 2060)
@@ -318,7 +330,6 @@ if sleep_mode == 'up':
             self.Dsy = self.DsPos[1]
             self.Ds1x = self.DsPos[0]
             self.Ds1y = self.DsPos[3]
-            print(f'{self.DsPos[2]}, {self.DsPos[3]}')
             
             if ((self.DsPos[0] <= self.player.Px) and (self.Ds1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.DsPos[1]):
