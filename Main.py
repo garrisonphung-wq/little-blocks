@@ -118,28 +118,28 @@ if sleep_mode == 'up':
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 3
+            self.x = self.x - 4
             self.y = 0
-            if self.x <= -6:
-                self.x = -3
+            if self.x <= -8:
+                self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 3
+            self.x = self.x + 4
             self.y = 0
-            if self.x >= 6:
-                self.x = 3
+            if self.x >= 8:
+                self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 3
+            self.y = self.y - 4
             self.x = 0
-            if self.y <= -6:
-                self.y = -3
+            if self.y <= -8:
+                self.y = -4
 
         def down(self, evt):
-            self.y = self.y + 3
+            self.y = self.y + 4
             self.x = 0
-            if self.y >= 6:
-                self.y = 3
+            if self.y >= 8:
+                self.y = 4
 
 
     # this is what the player go to, think stuff from the player class to here:
@@ -181,7 +181,7 @@ if sleep_mode == 'up':
                         player.respawn()
                         Level += 1
                         level_on = 'Level: ' + str(Level)
-                        coins = random.randint(0, 99)
+                        coins = int(coins)
                         Coins = 'coins: ' + str(coins)
                         COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
                         text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
@@ -196,6 +196,7 @@ if sleep_mode == 'up':
                         enemy.Check()
                         dangerstuff.Check()
                         coin.Check()
+                        enemyp.Check()
                         if Level in levels and True:
                             self.x = 0
                             self.y = 0
@@ -248,7 +249,7 @@ if sleep_mode == 'up':
         def draw(self):
             # self.player.x
             # self.player.y
-            self.starts = [-5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5]
+            self.starts = [-10, -9, -8, -7, -6, -5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             self.canvas.move(self.id, self.x, self.y)
             enemy_pos = self.canvas.coords(self.id)
             self.EnemyP = self.canvas.coords(self.id)
@@ -257,17 +258,17 @@ if sleep_mode == 'up':
             self.E1x = self.EnemyP[0]
             self.E1y = self.EnemyP[3]
 
+            if self.EnemyP[0] <= 0 or self.EnemyP[2] >= 1440:
+                self.x = self.x * -1
+            elif self.EnemyP[1] <= 0 or self.EnemyP[3] >= 850:
+                self.y = self.y * -1
+
             if ((self.EnemyP[0] <= self.player.Px) and (self.E1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.EnemyP[1]):
                     if not (self.player.position[0] >= self.EnemyP[2]):
                         move = 'no'
                         player.respawn()
                         goal.position()
-
-            if self.EnemyP[0] <= 0 or self.EnemyP[2] >= 1440:
-                self.x = self.x * -1
-            elif self.EnemyP[1] <= 0 or self.EnemyP[3] >= 850:
-                self.y = self.y * -1
 
         def Check(self):
             if Level == 2:
@@ -282,9 +283,63 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 60)
                 self.x = random.choice(self.starts)
                 self.y = random.choice(self.starts)
+            elif Level == 5:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = 0
+                self.y = -15
             else:
-                self.canvas.move(self.id, -740.0, -440.0)
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
                 self.canvas.move(self.id, 2060, 2060)
+
+
+    class EnemyH:
+        def __init__(self, color, player, goal, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline=color)
+            self.starts = [-10, -9, -8, -7, -6, -5, -4, -3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.goal = goal
+            self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.HPos = self.canvas.coords(self.id)
+            self.Hx = self.HPos[2]
+            self.Hy = self.HPos[1]
+            self.H1x = self.HPos[0]
+            self.H1y = self.HPos[3]
+            if self.HPos[0] <= 0 or self.HPos[2] >= 1440:
+                self.x = self.x * -1
+            elif self.HPos[1] <= 0 or self.HPos[3] >= 850:
+                self.y = self.y * -1
+
+            if ((self.HPos[0] <= self.player.Px) and (self.H1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.HPos[1]):
+                    if not (self.player.position[0] >= self.HPos[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.xPos = [-15, 15]
+            if Level == int('5'):
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.xPos)
+                self.y = 0
+            else:
+                self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 2000, 2000)
 
             #if sleep_mode == 'sleep':
                 #DirX = 0
@@ -375,6 +430,7 @@ if sleep_mode == 'up':
             self.Cy = self.CoinP[1]
             self.C1x = self.CoinP[0]
             self.C1y = self.CoinP[3]
+            print(f'{self.CoinP[2]}, {self.CoinP[3]}')
 
             if ((self.CoinP[0] <= self.player.Px) and (self.C1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.CoinP[1]):
@@ -389,9 +445,22 @@ if sleep_mode == 'up':
 
         def Check(self):
             if Level == 2:
-                # took a break here: break started at 4:58 PM
-                self.canvas.move(self.id, -685, -380)
+                self.canvas.move(self.id, -685, -380) 
+                self.canvas.move(self.id, -2100.0, -2100.0) 
+                self.canvas.move(self.id, 50, 50) 
+                self.canvas.move(self.id, 735, 430)
+            if Level == 3:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, -70)
+            if Level == 4:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 60)
+            if Level == 5:
+                self.canvas.move(self.id, 0, -60)
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -735, -360)
                 self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 685, 380)
 
     # we make the stuff here:
     if (Level in levels):
@@ -400,6 +469,7 @@ if sleep_mode == 'up':
         goal = Goal(light_green, player, wavestarter, canvas)
         dangerstuff = DangerStuff(orange, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
+        enemyp = EnemyH(red, player, goal, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -416,6 +486,7 @@ if sleep_mode == 'up':
             player.draw()
             goal.draw()
             enemy.draw()
+            enemyp.draw()
             dangerstuff.draw()
             coin.draw()
             Window.update_idletasks()
