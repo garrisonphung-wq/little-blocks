@@ -31,8 +31,11 @@ if sleep_mode == 'up':
     level_on = 'Level: ' + str(Level)
     coins = 0 #random.randint(0, 99)
     Coins = 'coins: ' + str(coins)
+    total_coins = 0
+    Tot = 0
     num_text = []
     coin_text = []
+    num_total = []
 
     # to get the Window, we need this code and you can name your game anything you want
     Window = Tk()
@@ -181,7 +184,7 @@ if sleep_mode == 'up':
                         player.respawn()
                         Level += 1
                         level_on = 'Level: ' + str(Level)
-                        coins = int(coins)
+                        coins = 0
                         Coins = 'coins: ' + str(coins)
                         COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
                         text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
@@ -272,8 +275,8 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
-            self.xPos = [-15, 15]
-            self.yPos = [-15, 15]
+            self.xPos = [-30, -25, -20, -15, 15, 20, 25, 30]
+            self.yPos = [-30, -25, -20, -15, 15, 20, 25, 30]
             if Level == 2:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 0)
@@ -301,6 +304,15 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 160, 380)
                 self.y = 35
                 self.x = 0
+            elif Level == 8:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 2060, 2060)
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.xPos)
+                self.y = random.choice(self.yPos)
             else:
                 self.x = 0
                 self.y = 0
@@ -340,7 +352,7 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
-            self.xPos = [-15, 15]
+            self.xPos = [-30, -25, -20, -15, 15, 20, 25, 30]
             if Level == int('5'):
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 380)
@@ -352,6 +364,14 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 750)
                 self.x = 67.5
+            elif Level == 8:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.xPos)
+                self.y = random.choice(self.xPos)
             else:
                 self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
                 self.canvas.move(self.id, 50, 50)
@@ -440,7 +460,7 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 685, 380)
 
         def draw(self):
-            global coins
+            global coins, total_coins
             self.CoinP = self.canvas.coords(self.id)
             self.Cx = self.CoinP[2]
             self.Cy = self.CoinP[1]
@@ -452,12 +472,22 @@ if sleep_mode == 'up':
                 if not (self.player.position[3] <= self.CoinP[1]):
                     if not (self.player.position[0] >= self.CoinP[2]):
                         self.canvas.move(self.id, 2000, 2000)
-                        coins += 1
-                        Coins = 'coins: ' + str(coins)
-                        COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
-                        coin_text.append(COINS)
-                        canvas.delete(coin_text[0])
-                        del coin_text[0]
+                        if Level == 6:
+                            player.respawn()
+                            self.canvas.move(self.id, -2000, -2000)
+                        else:
+                            total_coins += 1
+                            coins += 1
+                            Coins = 'coins: ' + str(coins)
+                            Tot = total_coins
+                            COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+                            Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins:' + str(total_coins), font=('roman blod', 20), fill='white')
+                            coin_text.append(COINS)
+                            num_total.append(Total)
+                            canvas.delete(num_total[0])
+                            canvas.delete(coin_text[0])
+                            del num_total[0]
+                            del coin_text[0]
 
         def Check(self):
             if Level == 2:
@@ -480,8 +510,9 @@ if sleep_mode == 'up':
             if Level == 6:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, -685, -380)
-                self.canvas.move(self.id, -25, -25)
+                self.canvas.move(self.id, 685, 380)
             if Level == 7:
+                self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 25, 25)
                 self.canvas.move(self.id, 685, 380)
                 self.canvas.move(self.id, -685, -380)
@@ -491,6 +522,16 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 380)
                 self.canvas.move(self.id, 1950, 1570)
                 self.canvas.move(self.id, 50, 380 + 50)
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 0 ,380)
+                self.canvas.move(self.id, 1925, 1925)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 0, -760)
+                self.canvas.move(self.id, 0, 380)
+            elif Level == 8:
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, random.randint(0, 855), random.randint(0, 1445))
 
     # we make the stuff here:
     if (Level in levels):
@@ -504,8 +545,10 @@ if sleep_mode == 'up':
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
 
+    Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins: ' + str(total_coins), font=('roman blod', 20), fill='white')
     COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
     text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
+    num_total.append(Total)
     num_text.append(text)
     coin_text.append(COINS)
     # without the while True we do mainloop but i'll do while True instead:
