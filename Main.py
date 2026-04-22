@@ -257,6 +257,7 @@ if sleep_mode == 'up':
             self.Ey = self.EnemyP[1]
             self.E1x = self.EnemyP[0]
             self.E1y = self.EnemyP[3]
+            print(f'{self.EnemyP[2]}, {self.EnemyP[3]}')
 
             if self.EnemyP[0] <= 0 or self.EnemyP[2] >= 1440:
                 self.x = self.x * -1
@@ -271,6 +272,8 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
+            self.xPos = [-15, 15]
+            self.yPos = [-15, 15]
             if Level == 2:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 0)
@@ -291,6 +294,13 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = 0
                 self.y = -15
+            elif Level == 7:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 160, 380)
+                self.y = 35
+                self.x = 0
             else:
                 self.x = 0
                 self.y = 0
@@ -336,6 +346,12 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.xPos)
                 self.y = 0
+            if Level == int('7'):
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 750)
+                self.x = 67.5
             else:
                 self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
                 self.canvas.move(self.id, 50, 50)
@@ -461,6 +477,20 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -735, -360)
                 self.canvas.move(self.id, 50, 50)
                 self.canvas.move(self.id, 685, 380)
+            if Level == 6:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -685, -380)
+                self.canvas.move(self.id, -25, -25)
+            if Level == 7:
+                self.canvas.move(self.id, 25, 25)
+                self.canvas.move(self.id, 685, 380)
+                self.canvas.move(self.id, -685, -380)
+                self.canvas.move(self.id, 0, 380)
+                self.canvas.move(self.id, -2050, -2430)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 0, 380)
+                self.canvas.move(self.id, 1950, 1570)
+                self.canvas.move(self.id, 50, 380 + 50)
 
     # we make the stuff here:
     if (Level in levels):
