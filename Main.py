@@ -33,6 +33,10 @@ if sleep_mode == 'up':
     Coins = 'coins: ' + str(coins)
     total_coins = 0
     Tot = 0
+    Deaths = 0
+    Pass = 0
+    Death_num = []
+    Pass_num = []
     num_text = []
     coin_text = []
     num_total = []
@@ -119,6 +123,14 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, self.position[2] * -1 + 60, self.position[3] * -1 + 60)
             self.canvas.move(self.id, 680, 750)
 
+        def teleport(self):
+            if Level == 10:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 200)
+
         # example: if the left key is press, the player will go left
         def left(self, evt):
             self.x = self.x - 4
@@ -144,6 +156,11 @@ if sleep_mode == 'up':
             if self.y >= 8:
                 self.y = 4
 
+        def Bounce(self):
+            if self.y == 4 or self.y == -4:
+                self.y = self.y * -1
+            elif self.x == 4 or self.x == -4:
+                self.x = self.x * -1
 
     # this is what the player go to, think stuff from the player class to here:
     class Goal:
@@ -177,22 +194,29 @@ if sleep_mode == 'up':
             self.xPos = self.GoalP[2]
             self.yPos = self.GoalP[3]
 
-            global Level, index, coins
+            global Level, index, coins, Pass
             if ((self.GoalP[0] <= self.player.Px) and (self.G1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.GoalP[1]):
                     if not (self.player.position[0] >= self.GoalP[2]):
                         player.respawn()
                         Level += 1
+                        Pass += 1
+                        Pass_T = 'Pass: ' + str(Pass)
                         level_on = 'Level: ' + str(Level)
                         coins = 0
                         Coins = 'coins: ' + str(coins)
+                        Passes = canvas.create_text(40, CoinPosY + 60, text=Pass_T, font=('roman bold', 20), fill='white')
                         COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
                         text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
                         num_text.append(text)
+                        Death_num.append(Deaths)
+                        Pass_num.append(Passes)
                         coin_text.append(COINS)
                         canvas.delete(num_text[0])
                         canvas.delete(coin_text[0])
+                        canvas.delete(Pass_num[0])
                         del num_text[0]
+                        del Pass_num[0]
                         del coin_text[0]
                         time.sleep(1)
                         # not usefull: wavestarter.ComeBack()
@@ -200,6 +224,9 @@ if sleep_mode == 'up':
                         dangerstuff.Check()
                         coin.Check()
                         enemyp.Check()
+                        jelly.Check()
+                        mainportal.Check()
+                        portal.Check()
                         if Level in levels and True:
                             self.x = 0
                             self.y = 0
@@ -260,13 +287,12 @@ if sleep_mode == 'up':
             self.Ey = self.EnemyP[1]
             self.E1x = self.EnemyP[0]
             self.E1y = self.EnemyP[3]
-            print(f'{self.EnemyP[2]}, {self.EnemyP[3]}')
 
             if self.EnemyP[0] <= 0 or self.EnemyP[2] >= 1440:
                 self.x = self.x * -1
             elif self.EnemyP[1] <= 0 or self.EnemyP[3] >= 850:
                 self.y = self.y * -1
-
+            global death
             if ((self.EnemyP[0] <= self.player.Px) and (self.E1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.EnemyP[1]):
                     if not (self.player.position[0] >= self.EnemyP[2]):
@@ -313,11 +339,31 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.xPos)
                 self.y = random.choice(self.yPos)
+            elif Level == 9:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 680, 650)
+                self.y = random.choice(self.yPos)
+                self.x = random.choice(self.xPos)
+            elif Level == 10:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 500)
+                self.x = 100
             else:
                 self.x = 0
                 self.y = 0
                 self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
                 self.canvas.move(self.id, 2060, 2060)
+
+        def Bounce(self):
+            if self.x > 1 or self.x < 1:
+                self.x = self.x * -1
+                if self.y > 1 or self.y < 1:
+                    self.y = self.y * -1
 
 
     class EnemyH:
@@ -372,6 +418,13 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.xPos)
                 self.y = random.choice(self.xPos)
+            elif Level == 10:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 500)
+                self.x = -67.5
             else:
                 self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
                 self.canvas.move(self.id, 50, 50)
@@ -466,7 +519,6 @@ if sleep_mode == 'up':
             self.Cy = self.CoinP[1]
             self.C1x = self.CoinP[0]
             self.C1y = self.CoinP[3]
-            print(f'{self.CoinP[2]}, {self.CoinP[3]}')
 
             if ((self.CoinP[0] <= self.player.Px) and (self.C1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.CoinP[1]):
@@ -481,7 +533,7 @@ if sleep_mode == 'up':
                             Coins = 'coins: ' + str(coins)
                             Tot = total_coins
                             COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
-                            Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins:' + str(total_coins), font=('roman blod', 20), fill='white')
+                            Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins: ' + str(total_coins), font=('roman blod', 20), fill='white')
                             coin_text.append(COINS)
                             num_total.append(Total)
                             canvas.delete(num_total[0])
@@ -531,23 +583,115 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 380)
             elif Level == 8:
                 self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
                 self.canvas.move(self.id, random.randint(0, 855), random.randint(0, 1445))
+            elif Level == 9:
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 745 - 50 - 20 + 10, 385 - 50 - 20)
+
+    class Jelly:
+        def __init__(self, color, player, enemy, goal, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.player = player
+            self.enemy = enemy
+            self.goal = goal
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.canvas.move(self.id, 2060, 2060)
+
+        def draw(self):
+            self.JellyP = self.canvas.coords(self.id)
+            self.Jx = self.JellyP[2]
+            self.Jy = self.JellyP[1]
+            self.J1x = self.JellyP[0]
+            self.J1y = self.JellyP[3]
+
+            if ((self.JellyP[0] <= self.player.Px) and (self.J1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.JellyP[1]):
+                    if not (self.player.position[0] >= self.JellyP[2]):
+                        move = 'no'
+                        player.Bounce()
+
+            if ((self.JellyP[0] <= self.enemy.Ex) and (self.J1y >= self.enemy.Ey)):
+                if not (self.enemy.EnemyP[3] <= self.JellyP[1]):
+                    if not (self.enemy.EnemyP[0] >= self.JellyP[2]):
+                        move = 'no'
+                        enemy.Bounce()
+
+        def Check(self):
+            if Level == 9:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 740, 420)
+            else:
+                self.canvas.move(self.id, self.JellyP[2] * -1, self.JellyP[3] * -1)
+                self.canvas.move(self.id, 2000, 2000)
+
+    class MainPortal:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.PP = self.canvas.coords(self.id)
+            self.PPx = self.PP[2]
+            self.PPy = self.PP[3]
+            self.PP1x = self.PP[0]
+            self.PP1y = self.PP[3]
+            print(f'{self.PP[2]}, {self.PP[3]}')
+
+            if ((self.PP[0] <= self.player.Px) and (self.PP1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.PP[1]):
+                    if not (self.player.position[0] >= self.PP[2]):
+                        move = 'no'
+                        player.teleport()
+
+        def Check(self):
+            if Level == 10:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 900, 750)
+
+    class Portal:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Check(self):
+            if Level == 10:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 200)
 
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
         player = Player('white', canvas)
+        mainportal = MainPortal("#78CDF4", player, canvas)
+        portal = Portal('#78CDF4', canvas)
         goal = Goal(light_green, player, wavestarter, canvas)
         dangerstuff = DangerStuff(orange, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
         enemyp = EnemyH(red, player, goal, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
+        jelly = Jelly("#FA7BAE", player, enemy, goal, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
-
-    Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins: ' + str(total_coins), font=('roman blod', 20), fill='white')
+    
+    Passes = canvas.create_text(40, CoinPosY + 60, text='Pass: ' + str(Pass), font=('roman bold', 20), fill='white')
+    Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins: ' + str(total_coins), font=('roman bold', 20), fill='white')
     COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
     text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
+    Pass_num.append(Passes)
     num_total.append(Total)
     num_text.append(text)
     coin_text.append(COINS)
@@ -557,11 +701,13 @@ if sleep_mode == 'up':
         if (Level in levels):
             # some of the .draw mean that it have a player colide if in one of the class in the whole code, define and if.
             player.draw()
+            mainportal.draw()
             goal.draw()
             enemy.draw()
             enemyp.draw()
             dangerstuff.draw()
             coin.draw()
+            jelly.draw()
             Window.update_idletasks()
             Window.update()
 
