@@ -35,11 +35,14 @@ if sleep_mode == 'up':
     Tot = 0
     Deaths = 0
     Pass = 0
+    position = 'yes'
     Death_num = []
     Pass_num = []
     num_text = []
     coin_text = []
     num_total = []
+    x_spot = 740
+    y_spot = 660
 
     # to get the Window, we need this code and you can name your game anything you want
     Window = Tk()
@@ -47,6 +50,7 @@ if sleep_mode == 'up':
     canvas = Canvas(Window, width=WIN_WIDTH, height=WIN_HEIGHT, bg='black')
     canvas.pack()
     Window.update()
+    Window.resizable(False, False)
 
     class WaveStarter:
         def __init__(self, color, canvas):
@@ -96,6 +100,7 @@ if sleep_mode == 'up':
             self.Py = self.position[1]
             self.P1x = self.position[0]
             self.P1y = self.position[3]
+            print(f'{self.position[2]}, {self.position[3]}')
 
             # when the player touch the edge, self.x = 0 and self.y = 0
             if (position[0] <= 0 or
@@ -124,12 +129,21 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, 680, 750)
 
         def teleport(self):
+            self.x = 0
+            self.y = 0
             if Level == 10:
-                self.x = 0
-                self.y = 0
                 self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 200)
+            if Level == 11:
+                self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 600)
+                self.y = 4
+            if Level == 12:
+                self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+                self.canvas.move(self.id, x_spot, y_spot)
+                
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
@@ -227,6 +241,9 @@ if sleep_mode == 'up':
                         jelly.Check()
                         mainportal.Check()
                         portal.Check()
+                        wall.Check()
+                        wally.Check()
+                        walln.Check()
                         if Level in levels and True:
                             self.x = 0
                             self.y = 0
@@ -269,12 +286,9 @@ if sleep_mode == 'up':
             self.enemy_pos = self.canvas.coords(self.id)
             self.EnemyX = self.enemy_pos[0]
             self.EnemyY = self.enemy_pos[1]
-            if (Level == 2 or
-                Level == 4
-                ):
-                self.canvas.move(self.id, 680, 380)
-            else:
-                self.canvas.move(self.id, 2000, 2000)
+            self.EnemyP = self.canvas.coords(self.id)
+            self.canvas.move(self.id, 2000, 2000)
+
 
         def draw(self):
             # self.player.x
@@ -301,6 +315,8 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
+            self.x = 0
+            self.y = 0
             self.xPos = [-30, -25, -20, -15, 15, 20, 25, 30]
             self.yPos = [-30, -25, -20, -15, 15, 20, 25, 30]
             if Level == 2:
@@ -353,6 +369,22 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 500)
                 self.x = 100
+            elif Level == 11:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680 / 2, 600)
+                self.x = 50
+            elif Level == 12:
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380 / 2)
+                self.x = 100
+            elif Level == 13:
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 495)
             else:
                 self.x = 0
                 self.y = 0
@@ -362,8 +394,8 @@ if sleep_mode == 'up':
         def Bounce(self):
             if self.x > 1 or self.x < 1:
                 self.x = self.x * -1
-                if self.y > 1 or self.y < 1:
-                    self.y = self.y * -1
+            if self.y > 1 or self.y < 1:
+                self.y = self.y * -1
 
 
     class EnemyH:
@@ -425,6 +457,13 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 500)
                 self.x = -67.5
+            elif Level == 12:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380 / 2)
+                self.x = -67.5
             else:
                 self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
                 self.canvas.move(self.id, 50, 50)
@@ -474,6 +513,7 @@ if sleep_mode == 'up':
             self.Dsy = self.DsPos[1]
             self.Ds1x = self.DsPos[0]
             self.Ds1y = self.DsPos[3]
+            print(f'{self.DsPos[2]}, {self.DsPos[3]}')
             
             if ((self.DsPos[0] <= self.player.Px) and (self.Ds1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.DsPos[1]):
@@ -495,6 +535,10 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 0, 0)
                 self.canvas.move(self.id, 680, 380)
+            if Level == 11 or Level == 12:
+                self.canvas.move(self.id, self.DsPos[2] * -1, self.DsPos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 600)
             else:
                 self.canvas.move(self.id, -740, -440)
                 self.canvas.move(self.id, 60, 60)
@@ -528,8 +572,16 @@ if sleep_mode == 'up':
                             player.respawn()
                             self.canvas.move(self.id, -2000, -2000)
                         else:
-                            total_coins += 1
-                            coins += 1
+                            if Level == 12:
+                                if total_coins == 9:
+                                    total_coins = 10
+                                elif total_coins == 8:
+                                    total_coins = 9
+                                coins += 1
+                                coins = 2
+                            else:
+                                total_coins += 1
+                                coins += 1
                             Coins = 'coins: ' + str(coins)
                             Tot = total_coins
                             COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
@@ -589,6 +641,32 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
                 self.canvas.move(self.id, 50, 50)
                 self.canvas.move(self.id, 745 - 50 - 20 + 10, 385 - 50 - 20)
+            elif Level == 11:
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 745 - 50 - 20 + 10, 605)
+            elif Level == 12:
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 685, 605)
+
+        def Move(self):
+            global total_coins, coins
+            if Level == 12 and position == 'yes':
+                self.canvas.move(self.id, self.CoinP[2] * -1, self.CoinP[3] * -1)
+                self.canvas.move(self.id, 50, 50)
+                self.canvas.move(self.id, 5, 95)
+                total_coins += 1
+                coins += 1
+                Coins = 'coins: ' + str(coins)
+                COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+                Total = canvas.create_text(70, CoinPosY + 30, text='Total Coins: ' + str(total_coins), font=('roman blod', 20), fill='white')
+                coin_text.append(COINS)
+                num_total.append(Total)
+                canvas.delete(num_total[0])
+                canvas.delete(coin_text[0])
+                del num_total[0]
+                del coin_text[0]
 
     class Jelly:
         def __init__(self, color, player, enemy, goal, canvas):
@@ -625,6 +703,10 @@ if sleep_mode == 'up':
             if Level == 9:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 740, 420)
+            if Level == 11:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 620, 600)
             else:
                 self.canvas.move(self.id, self.JellyP[2] * -1, self.JellyP[3] * -1)
                 self.canvas.move(self.id, 2000, 2000)
@@ -645,18 +727,30 @@ if sleep_mode == 'up':
             self.PPy = self.PP[3]
             self.PP1x = self.PP[0]
             self.PP1y = self.PP[3]
-            print(f'{self.PP[2]}, {self.PP[3]}')
 
             if ((self.PP[0] <= self.player.Px) and (self.PP1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.PP[1]):
                     if not (self.player.position[0] >= self.PP[2]):
                         move = 'no'
+                        portal.Move()
                         player.teleport()
 
         def Check(self):
             if Level == 10:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 900, 750)
+            if Level == 11:
+                self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+            if Level == 12:
+                self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680 / 4, 380)
+            if Level == 13:
+                self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 540)
 
     class Portal:
         def __init__(self, color, canvas):
@@ -667,23 +761,156 @@ if sleep_mode == 'up':
             self.y = 0
             self.canvas.move(self.id, 2000, 2000)
 
+        def draw(self):
+            self.Ppos = self.canvas.coords(self.id)
+
         def Check(self):
+            global x_spot, y_spot
             if Level == 10:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 200)
+            if Level == 11:
+                self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 600)
+            if Level == 12:
+                x_spot = 740
+                y_spot = 660
+                print(f'{x_spot}, {y_spot}')
+            if Level == 13:
+                self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 540 - 120)
+
+        def Move(self):
+            global x_spot, y_spot
+            if Level == 12:
+                self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
+                self.canvas.move(self.id, 60, 150)
+                x_spot = self.Ppos[2]
+                y_spot = self.Ppos[3]
+                coin.Move()
+
+    class Wall:
+        def __init__(self, color, player, enemy, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill='red', outline='dark red')
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.enemy =  enemy
+            if Level == 13:
+                self.canvas.move(self.id, 0, 150)
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.WallP = self.canvas.coords(self.id)
+            self.Wx = self.WallP[2]
+            self.Wy = self.WallP[1]
+            self.W1x = self.WallP[0]
+            self.W1y = self.WallP[3]
+
+            if ((self.WallP[0] <= self.player.Px) and (self.W1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.WallP[1]):
+                    if not (self.player.position[0] >= self.WallP[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
+
+            if ((self.WallP[0] <= self.enemy.Ex) and (self.W1y >= self.enemy.Ey)):
+                if not (self.enemy.EnemyP[3] <= self.WallP[1]):
+                    if not (self.enemy.EnemyP[0] >= self.WallP[2]):
+                        move = 'no'
+                        enemy.Bounce()
+
+        def Check(self):
+            if Level == 13:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 150)
+
+    class WallY:
+        def __init__(self, color, wall, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline='dark red')
+            self.canvas = canvas
+            self.wall = wall
+            self.player = player
+            self.x = 0
+            self.y = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 13:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 664, 0)
+
+
+        def draw(self):
+            self.YP = self.canvas.coords(self.id)
+            self.Yx = self.YP[2]
+            self.Yx = self.YP[1]
+            self.Y1x = self.YP[0]
+            self.Y1y = self.YP[3]
+
+            if ((self.YP[0] <= self.player.Px) and (self.Y1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.YP[1]):
+                    if not (self.player.position[0] >= self.YP[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 13:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 664, 0)
+
+    class WallN:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill='red', outline='dark red')
+            self.player = player
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            if Level == 13:
+                self.canvas.move(self.id, 670 + 76, 0)
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.NP = self.canvas.coords(self.id)
+            self.Nx = self.NP[2]
+            self.Ny = self.NP[1]
+            self.N1x = self.NP[0]
+            self.N1y = self.NP[3]
+
+            if ((self.NP[0] <= self.player.Px) and (self.N1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.NP[1]):
+                    if not (self.player.position[0] >= self.NP[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 13:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 670 + 76, 0)
 
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
+        portal = Portal('#78CDF4', canvas)
         player = Player('white', canvas)
         mainportal = MainPortal("#78CDF4", player, canvas)
-        portal = Portal('#78CDF4', canvas)
         goal = Goal(light_green, player, wavestarter, canvas)
         dangerstuff = DangerStuff(orange, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
         enemyp = EnemyH(red, player, goal, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
         jelly = Jelly("#FA7BAE", player, enemy, goal, canvas)
+        wall = Wall("#000000", player, enemy, canvas)
+        wally = WallY('red', wall, player, canvas)
+        walln = WallN('red', player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -702,12 +929,16 @@ if sleep_mode == 'up':
             # some of the .draw mean that it have a player colide if in one of the class in the whole code, define and if.
             player.draw()
             mainportal.draw()
+            portal.draw()
             goal.draw()
             enemy.draw()
             enemyp.draw()
             dangerstuff.draw()
             coin.draw()
             jelly.draw()
+            wall.draw()
+            wally.draw()
+            walln.draw()
             Window.update_idletasks()
             Window.update()
 
