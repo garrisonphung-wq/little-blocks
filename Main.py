@@ -41,6 +41,7 @@ if sleep_mode == 'up':
     num_text = []
     coin_text = []
     num_total = []
+    FstSnd = 'first'
     x_spot = 740
     y_spot = 660
 
@@ -100,7 +101,6 @@ if sleep_mode == 'up':
             self.Py = self.position[1]
             self.P1x = self.position[0]
             self.P1y = self.position[3]
-            print(f'{self.position[2]}, {self.position[3]}')
 
             # when the player touch the edge, self.x = 0 and self.y = 0
             if (position[0] <= 0 or
@@ -143,31 +143,38 @@ if sleep_mode == 'up':
             if Level == 12:
                 self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
                 self.canvas.move(self.id, x_spot, y_spot)
-                
+            if Level == 13:
+                self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+                self.canvas.move(self.id, x_spot, y_spot)
+
+        def Backup(self):
+            self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+            self.canvas.move(self.id, 60, 60)
+            self.canvas.move(self.id, 680, 540 - 90)
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 4
+            self.x = self.x - 20
             self.y = 0
-            if self.x <= -8:
+            if self.x <= -100:
                 self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 4
+            self.x = self.x + 20
             self.y = 0
-            if self.x >= 8:
+            if self.x >= 100:
                 self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 4
+            self.y = self.y - 20
             self.x = 0
-            if self.y <= -8:
+            if self.y <= -100:
                 self.y = -4
 
         def down(self, evt):
-            self.y = self.y + 4
+            self.y = self.y + 20
             self.x = 0
-            if self.y >= 8:
+            if self.y >= 100:
                 self.y = 4
 
         def Bounce(self):
@@ -212,44 +219,45 @@ if sleep_mode == 'up':
             if ((self.GoalP[0] <= self.player.Px) and (self.G1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.GoalP[1]):
                     if not (self.player.position[0] >= self.GoalP[2]):
-                        player.respawn()
-                        Level += 1
-                        Pass += 1
-                        Pass_T = 'Pass: ' + str(Pass)
-                        level_on = 'Level: ' + str(Level)
-                        coins = 0
-                        Coins = 'coins: ' + str(coins)
-                        Passes = canvas.create_text(40, CoinPosY + 60, text=Pass_T, font=('roman bold', 20), fill='white')
-                        COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
-                        text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
-                        num_text.append(text)
-                        Death_num.append(Deaths)
-                        Pass_num.append(Passes)
-                        coin_text.append(COINS)
-                        canvas.delete(num_text[0])
-                        canvas.delete(coin_text[0])
-                        canvas.delete(Pass_num[0])
-                        del num_text[0]
-                        del Pass_num[0]
-                        del coin_text[0]
-                        time.sleep(1)
-                        # not usefull: wavestarter.ComeBack()
-                        enemy.Check()
-                        dangerstuff.Check()
-                        coin.Check()
-                        enemyp.Check()
-                        jelly.Check()
-                        mainportal.Check()
-                        portal.Check()
-                        wall.Check()
-                        wally.Check()
-                        walln.Check()
-                        if Level in levels and True:
-                            self.x = 0
-                            self.y = 0
-                            self.canvas.move(self.id, self.GoalP[2] * -1 + 36, self.GoalP[3] * -1 + 36)
-                            self.canvas.move(self.id, 740 - 36, 60 - 36)
-                            self.x = 3
+                            player.respawn()
+                            Level += 1
+                            Pass += 1
+                            Pass_T = 'Pass: ' + str(Pass)
+                            level_on = 'Level: ' + str(Level)
+                            coins = 0
+                            Coins = 'coins: ' + str(coins)
+                            Passes = canvas.create_text(40, CoinPosY + 60, text=Pass_T, font=('roman bold', 20), fill='white')
+                            COINS = canvas.create_text(CoinPosX, CoinPosY, text=Coins, font=('roman bold', 20), fill='white')
+                            text = canvas.create_text(45, 825, text=level_on, font=('roman bold', 20), fill='white')
+                            num_text.append(text)
+                            Death_num.append(Deaths)
+                            Pass_num.append(Passes)
+                            coin_text.append(COINS)
+                            canvas.delete(num_text[0])
+                            canvas.delete(coin_text[0])
+                            canvas.delete(Pass_num[0])
+                            del num_text[0]
+                            del Pass_num[0]
+                            del coin_text[0]
+                            time.sleep(1)
+                            # not usefull: wavestarter.ComeBack()
+                            enemy.Check()
+                            dangerstuff.Check()
+                            coin.Check()
+                            enemyp.Check()
+                            jelly.Check()
+                            mainportal.Check()
+                            portal.Check()
+                            wall.Check()
+                            wally.Check()
+                            walln.Check()
+                            Check()
+                            if Level in levels and True:
+                                self.x = 0
+                                self.y = 0
+                                self.canvas.move(self.id, self.GoalP[2] * -1 + 36, self.GoalP[3] * -1 + 36)
+                                self.canvas.move(self.id, 740 - 36, 60 - 36)
+                                self.x = 3
                             # not use full: #wavestarter.GetAway()
 
 
@@ -397,6 +405,10 @@ if sleep_mode == 'up':
             if self.y > 1 or self.y < 1:
                 self.y = self.y * -1
 
+        def Gone(self):
+            self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+            self.canvas.move(self.id, 2060, 2060)
+
 
     class EnemyH:
         def __init__(self, color, player, goal, canvas):
@@ -513,7 +525,6 @@ if sleep_mode == 'up':
             self.Dsy = self.DsPos[1]
             self.Ds1x = self.DsPos[0]
             self.Ds1y = self.DsPos[3]
-            print(f'{self.DsPos[2]}, {self.DsPos[3]}')
             
             if ((self.DsPos[0] <= self.player.Px) and (self.Ds1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.DsPos[1]):
@@ -722,6 +733,7 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, 2000, 2000)
 
         def draw(self):
+            global x_spot, y_spot
             self.PP = self.canvas.coords(self.id)
             self.PPx = self.PP[2]
             self.PPy = self.PP[3]
@@ -733,7 +745,13 @@ if sleep_mode == 'up':
                     if not (self.player.position[0] >= self.PP[2]):
                         move = 'no'
                         portal.Move()
+                        Check1()
                         player.teleport()
+                        if Level == 13 and FstSnd != 'out of ourder':
+                            self.canvas.move(self.id, 0, -375)
+                        elif Level == 13 and FstSnd == 'out of ourder':
+                            wally.Gone()
+                            walln.Gone()
 
         def Check(self):
             if Level == 10:
@@ -776,11 +794,12 @@ if sleep_mode == 'up':
             if Level == 12:
                 x_spot = 740
                 y_spot = 660
-                print(f'{x_spot}, {y_spot}')
             if Level == 13:
                 self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
                 self.canvas.move(self.id, 60, 60)
-                self.canvas.move(self.id, 680, 540 - 120)
+                self.canvas.move(self.id, 680, 540 - 90)
+                x_spot = self.Ppos[2]
+                y_spot = self.Ppos[3]
 
         def Move(self):
             global x_spot, y_spot
@@ -790,6 +809,10 @@ if sleep_mode == 'up':
                 x_spot = self.Ppos[2]
                 y_spot = self.Ppos[3]
                 coin.Move()
+            if Level == 13:
+                self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 85)
 
     class Wall:
         def __init__(self, color, player, enemy, canvas):
@@ -864,6 +887,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 664, 0)
 
+        def Gone(self):
+            self.canvas.move(self.id, 2000, 2000)
+
     class WallN:
         def __init__(self, color, player, canvas):
             self.id = canvas
@@ -895,6 +921,36 @@ if sleep_mode == 'up':
             if Level == 13:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 670 + 76, 0)
+
+        def Gone(self):
+            self.canvas.move(self.id, 2000, 2000)
+
+    def Check():
+        global x_spot, y_spot, FstSnd
+        if Level == 13 and FstSnd == 'first':
+            x_spot = 680 + 60
+            y_spot = (540 - 90) + 60
+
+    def Check1():
+        global x_spot, y_spot, FstSnd
+        if Level == 13 and FstSnd == 'first':
+            enemy.Gone()
+            FstSnd = 'second'
+            x_spot = 680 + 60
+            y_spot = (540 - 90) + 60
+        elif Level == 13:
+            Check2()
+            #player.Backup()
+
+    def Check2():
+        global x_spot, y_spot, FstSnd
+        #enemy.Gone()
+        if Level == 13 and FstSnd == 'second':
+            x_spot = 680 + 60
+            y_spot = 60 + 85
+            print(f'{x_spot}, {y_spot}')
+            FstSnd = 'out of ourder'
+
 
     # we make the stuff here:
     if (Level in levels):
