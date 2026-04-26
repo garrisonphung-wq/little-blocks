@@ -257,6 +257,7 @@ if sleep_mode == 'up':
                             wally.Check()
                             walln.Check()
                             regwall.check()
+                            lava.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -803,6 +804,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380 + (380 / 4))
+            if Level == 15:
+                self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
+                self.canvas.move(self.id, 2060, 2060)
 
     class Portal:
         def __init__(self, color, canvas):
@@ -838,6 +842,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380 - (380 / 2.5))
+            if Level == 15:
+                self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
+                self.canvas.move(self.id, 2060, 2060)
 
         def Move(self):
             global x_spot, y_spot
@@ -959,9 +966,16 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
+            self.x = 0
+            self.y = 0
             if Level == 13:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 670 + 76, 0)
+            if Level == 15:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, self.NP[2] * -1, self.NP[3] * -1)
+                self.x = 0.5
+                self.y = 0
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -1042,6 +1056,44 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.RP[2] * -1, self.RP[3] * -1)
                 self.canvas.move(self.id, 2000, 2000)
 
+    class Lava:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.LavaP = self.canvas.coords(self.id)
+            self.Lx = self.LavaP[2]
+            self.Ly = self.LavaP[1]
+            self.L1x = self.LavaP[0]
+            self.L1y = self.LavaP[3]
+
+            if ((self.LavaP[0] <= self.player.Px) and (self.L1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.LavaP[1]):
+                    if not (self.player.position[0] >= self.LavaP[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
+
+            if self.y == 30 and self.LavaP[3] > 850:
+                self.canvas.move(self.id, self.LavaP[2] * -1, self.LavaP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 0)
+                self.y = 30
+
+        def Check(self):
+            if Level == 15:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 0)
+                self.y = 30
+                self.x = 0
+
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -1058,6 +1110,7 @@ if sleep_mode == 'up':
         wally = WallY('red', wall, player, canvas)
         walln = WallN('red', player, canvas)
         regwall = RegWall("#646464", player, enemy, canvas)
+        lava = Lava('coral', player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -1087,6 +1140,7 @@ if sleep_mode == 'up':
             wally.draw()
             walln.draw()
             regwall.draw()
+            lava.draw()
             Window.update_idletasks()
             Window.update()
 
