@@ -952,11 +952,15 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2000, 2000)
 
         def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
             self.NP = self.canvas.coords(self.id)
             self.Nx = self.NP[2]
             self.Ny = self.NP[1]
             self.N1x = self.NP[0]
             self.N1y = self.NP[3]
+            if self.NP[0] <= 0 or self.NP[2] >= 1440 and Level == 15:
+                self.x = self.x * -1
+            print(f'{self.NP[0]}, {self.NP[1]}')
 
             if ((self.NP[0] <= self.player.Px) and (self.N1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.NP[1]):
@@ -964,6 +968,7 @@ if sleep_mode == 'up':
                         move = 'no'
                         player.respawn()
                         goal.position()
+                        self.Back()
 
         def Check(self):
             self.x = 0
@@ -974,11 +979,21 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, self.NP[2] * -1, self.NP[3] * -1)
+                self.canvas.move(self.id, 2000, 2000)
+                self.canvas.move(self.id, 740, 0)
+                self.canvas.move(self.id, -705, 850)
                 self.x = 0.5
                 self.y = 0
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
+
+        def Back(self):
+            self.x = 0
+            self.y = 0
+            self.canvas.move(self.id, self.NP[2] * -1, self.NP[3] * -1)
+            self.x = 0.5
+            self.y = 0
 
     def Check():
         global x_spot, y_spot, FstSnd, comment_num
