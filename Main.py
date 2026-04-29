@@ -159,27 +159,27 @@ if sleep_mode == 'up':
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 4
+            self.x = self.x - 25
             self.y = 0
-            if self.x <= -8:
+            if self.x <= -100:
                 self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 4
+            self.x = self.x + 25
             self.y = 0
-            if self.x >= 8:
+            if self.x >= 100:
                 self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 4
+            self.y = self.y - 25
             self.x = 0
-            if self.y <= -8:
+            if self.y <= -100:
                 self.y = -4
 
         def down(self, evt):
-            self.y = self.y + 4
+            self.y = self.y + 25
             self.x = 0
-            if self.y >= 8:
+            if self.y >= 100:
                 self.y = 4
 
         def Bounce(self):
@@ -922,6 +922,7 @@ if sleep_mode == 'up':
             self.Yx = self.YP[1]
             self.Y1x = self.YP[0]
             self.Y1y = self.YP[3]
+            print(f'{self.YP[0]}, {self.YP[1]}')
 
             if ((self.YP[0] <= self.player.Px) and (self.Y1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.YP[1]):
@@ -934,6 +935,12 @@ if sleep_mode == 'up':
             if Level == 13:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 664, 0)
+            if Level == 15:
+                self.canvas.move(self.id, -664, 0)
+                self.canvas.move(self.id, 2000, 2000)
+                self.canvas.move(self.id, -4000, -4000)
+                self.canvas.move(self.id, 1395, 0)
+                # rest: 7:01 PM
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -960,7 +967,6 @@ if sleep_mode == 'up':
             self.N1y = self.NP[3]
             if self.NP[0] <= 0 or self.NP[2] >= 1440 and Level == 15:
                 self.x = self.x * -1
-            print(f'{self.NP[0]}, {self.NP[1]}')
 
             if ((self.NP[0] <= self.player.Px) and (self.N1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.NP[1]):
@@ -1096,7 +1102,7 @@ if sleep_mode == 'up':
                         player.respawn()
                         goal.position()
 
-            if self.y == 30 and self.LavaP[3] > 850:
+            if self.y == 18.75 and self.LavaP[3] > 850:
                 self.canvas.move(self.id, self.LavaP[2] * -1, self.LavaP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 0)
@@ -1106,7 +1112,7 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 0)
-                self.y = 30
+                self.y = 18.75
                 self.x = 0
 
     # we make the stuff here:
