@@ -900,6 +900,8 @@ if sleep_mode == 'up':
             if Level == 14:
                 self.canvas.move(self.id, self.WallP[2] * -1, self.WallP[3] * -1)
                 self.canvas.move(self.id, 2000, 2000)
+            if Level == 15:
+                self.canvas.move(self.id, -2000, -2000)
 
     class WallY:
         def __init__(self, color, wall, player, canvas):
@@ -917,12 +919,16 @@ if sleep_mode == 'up':
 
 
         def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
             self.YP = self.canvas.coords(self.id)
             self.Yx = self.YP[2]
             self.Yx = self.YP[1]
             self.Y1x = self.YP[0]
             self.Y1y = self.YP[3]
-            print(f'{self.YP[0]}, {self.YP[1]}')
+            print(f'{self.YP[2]}, {self.YP[3]}')
+
+            if self.YP[0] <= 0 or self.YP[2] >= 1435:
+                self.x = self.x * -1
 
             if ((self.YP[0] <= self.player.Px) and (self.Y1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.YP[1]):
@@ -932,6 +938,8 @@ if sleep_mode == 'up':
                         goal.position()
 
         def Check(self):
+            self.x = 0
+            self.y = 0
             if Level == 13:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 664, 0)
@@ -939,8 +947,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -664, 0)
                 self.canvas.move(self.id, 2000, 2000)
                 self.canvas.move(self.id, -4000, -4000)
-                self.canvas.move(self.id, 1395, 0)
-                # rest: 7:01 PM
+                self.canvas.move(self.id, 1400, 0)
+                self.x = -1.5
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -974,7 +982,8 @@ if sleep_mode == 'up':
                         move = 'no'
                         player.respawn()
                         goal.position()
-                        self.Back()
+                        if Level == 12:
+                            self.Back()
 
         def Check(self):
             self.x = 0
@@ -988,7 +997,7 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2000, 2000)
                 self.canvas.move(self.id, 740, 0)
                 self.canvas.move(self.id, -705, 850)
-                self.x = 0.5
+                self.x = 1.5
                 self.y = 0
 
         def Gone(self):
