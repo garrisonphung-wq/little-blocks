@@ -159,27 +159,27 @@ if sleep_mode == 'up':
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 25
+            self.x = self.x - 4
             self.y = 0
-            if self.x <= -100:
+            if self.x <= -8:
                 self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 25
+            self.x = self.x + 4
             self.y = 0
-            if self.x >= 100:
+            if self.x >= 8:
                 self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 25
+            self.y = self.y - 4
             self.x = 0
-            if self.y <= -100:
+            if self.y <= -8:
                 self.y = -4
 
         def down(self, evt):
-            self.y = self.y + 25
+            self.y = self.y + 4
             self.x = 0
-            if self.y >= 100:
+            if self.y >= 8:
                 self.y = 4
 
         def Bounce(self):
@@ -257,6 +257,7 @@ if sleep_mode == 'up':
                             wally.Check()
                             walln.Check()
                             regwall.check()
+                            wallday.Check()
                             lava.Check()
                             Check()
                             if Level in levels and True:
@@ -879,6 +880,7 @@ if sleep_mode == 'up':
             self.Wy = self.WallP[1]
             self.W1x = self.WallP[0]
             self.W1y = self.WallP[3]
+            print(f'{self.WallP[0]}, {self.WallP[1]}')
 
             if ((self.WallP[0] <= self.player.Px) and (self.W1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.WallP[1]):
@@ -902,6 +904,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2000, 2000)
             if Level == 15:
                 self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 1440, 35)
+                self.canvas.move(self.id, 0, 150)
 
     class WallY:
         def __init__(self, color, wall, player, canvas):
@@ -925,7 +929,6 @@ if sleep_mode == 'up':
             self.Yx = self.YP[1]
             self.Y1x = self.YP[0]
             self.Y1y = self.YP[3]
-            print(f'{self.YP[2]}, {self.YP[3]}')
 
             if self.YP[0] <= 0 or self.YP[2] >= 1435:
                 self.x = self.x * -1
@@ -948,7 +951,7 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2000, 2000)
                 self.canvas.move(self.id, -4000, -4000)
                 self.canvas.move(self.id, 1400, 0)
-                self.x = -1.5
+                self.x = -2
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -997,7 +1000,7 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2000, 2000)
                 self.canvas.move(self.id, 740, 0)
                 self.canvas.move(self.id, -705, 850)
-                self.x = 1.5
+                self.x = 2
                 self.y = 0
 
         def Gone(self):
@@ -1064,6 +1067,7 @@ if sleep_mode == 'up':
             self.Ry = self.RP[1]
             self.R1x = self.RP[0]
             self.R1y = self.RP[3]
+            print(f'{self.RP[0]}, {self.RP[1]}')
 
             if ((self.RP[0] <= self.player.Px) and (self.R1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.RP[1]):
@@ -1083,8 +1087,37 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 420 - 35)
                 print(comment_num)
             if Level == 15:
-                self.canvas.move(self.id, self.RP[2] * -1, self.RP[3] * -1)
-                self.canvas.move(self.id, 2000, 2000)
+                self.canvas.move(self.id, 0, (420 - 35) * -1)
+                self.canvas.move(self.id, 0, 600)
+
+    class WallDay:
+        def __init__(self, color, player, enemy, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.canvas = canvas
+            self.x = 0
+            self.y = 0
+            self.enemy = enemy
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.WDP = self.canvas.coords(self.id)
+            self.WDx = self.WDP[2]
+            self.WDy = self.WDP[1]
+            self.W1x = self.WDP[0]
+            self.W1y = self.WDP[3]
+
+            if ((self.WDP[0] <= self.player.Px) and (self.W1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.WDP[1]):
+                    if not (self.player.position[0] >= self.WDP[2]):
+                        move = 'no'
+                        player.freeze()
+
+        def Check(self):
+            if Level == 15:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 350)
 
     class Lava:
         def __init__(self, color, player, canvas):
@@ -1140,6 +1173,7 @@ if sleep_mode == 'up':
         wally = WallY('red', wall, player, canvas)
         walln = WallN('red', player, canvas)
         regwall = RegWall("#646464", player, enemy, canvas)
+        wallday = WallDay('#646464', player, enemy, canvas)
         lava = Lava('coral', player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -1170,6 +1204,7 @@ if sleep_mode == 'up':
             wally.draw()
             walln.draw()
             regwall.draw()
+            wallday.draw()
             lava.draw()
             Window.update_idletasks()
             Window.update()
