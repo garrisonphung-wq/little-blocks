@@ -147,6 +147,10 @@ if sleep_mode == 'up':
             if Level == 13:
                 self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
                 self.canvas.move(self.id, x_spot, y_spot)
+            if Level == 15:
+                self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 85)
 
         def Backup(self):
             self.canvas.move(self.id, self.position[2] * -1, self.position[3] * -1)
@@ -512,7 +516,30 @@ if sleep_mode == 'up':
                 self.y = self.player.PlayerY - self.EnemyY
                 print(f'{player.PlayerX}, {player.PlayerX}')
 
+    class Weird:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, fill=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
 
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        move = 'no'
+                        player.respawn()
+                        goal.position()
 
     class DangerStuff:
         def __init__(self, color, player, goal, canvas):
@@ -783,6 +810,9 @@ if sleep_mode == 'up':
                         elif Level == 13 and FstSnd == 'out of ourder':
                             wally.Gone()
                             walln.Gone()
+                        if Level == 15:
+                            wally.Gone()
+                            walln.Gone()
 
 
         def Check(self):
@@ -808,6 +838,8 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, self.PP[2] * -1, self.PP[3] * -1)
                 self.canvas.move(self.id, 2060, 2060)
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 275)
 
     class Portal:
         def __init__(self, color, canvas):
@@ -846,6 +878,8 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, self.Ppos[2] * -1, self.Ppos[3] * -1)
                 self.canvas.move(self.id, 2060, 2060)
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 85)
 
         def Move(self):
             global x_spot, y_spot
@@ -1117,7 +1151,7 @@ if sleep_mode == 'up':
         def Check(self):
             if Level == 15:
                 self.canvas.move(self.id, -2000, -2000)
-                self.canvas.move(self.id, 0, 350)
+                self.canvas.move(self.id, 0, 415)
 
     class Lava:
         def __init__(self, color, player, canvas):
@@ -1151,11 +1185,12 @@ if sleep_mode == 'up':
                 self.y = 30
 
         def Check(self):
-            if Level == 15:
-                self.canvas.move(self.id, -2000, -2000)
-                self.canvas.move(self.id, 680, 0)
-                self.y = 18.75
-                self.x = 0
+            #if Level == 15:
+                #self.canvas.move(self.id, -2000, -2000)
+                #self.canvas.move(self.id, 680, 0)
+                #self.y = 18.75
+                #self.x = 0
+            self.canvas.move(self.id, 0, 0)
 
     # we make the stuff here:
     if (Level in levels):
@@ -1167,6 +1202,7 @@ if sleep_mode == 'up':
         dangerstuff = DangerStuff(orange, player, goal, canvas)
         enemy = Enemy(red, 2, player, goal, canvas)
         enemyp = EnemyH(red, player, goal, canvas)
+        weird = Weird('red', player, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
         jelly = Jelly("#FA7BAE", player, enemy, goal, canvas)
         wall = Wall("#000000", player, enemy, canvas)
@@ -1197,6 +1233,7 @@ if sleep_mode == 'up':
             goal.draw()
             enemy.draw()
             enemyp.draw()
+            weird.draw()
             dangerstuff.draw()
             coin.draw()
             jelly.draw()
