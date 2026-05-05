@@ -254,6 +254,7 @@ if sleep_mode == 'up':
                             dangerstuff.Check()
                             coin.Check()
                             enemyp.Check()
+                            weird.Check()
                             jelly.Check()
                             mainportal.Check()
                             portal.Check()
@@ -519,7 +520,7 @@ if sleep_mode == 'up':
     class Weird:
         def __init__(self, color, player, canvas):
             self.id = canvas
-            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, fill=color)
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
             self.x = 0
             self.y = 0
             self.canvas = canvas
@@ -533,6 +534,15 @@ if sleep_mode == 'up':
             self.Ay = self.AP[1]
             self.A1x = self.AP[0]
             self.A1y = self.AP[3]
+            if Level == 16:
+                self.x = random.randint(-100, 100)
+                self.y = random.randint(-100, 100)
+
+            if (self.AP[0] <= 0 or self.AP[2] >= 1440) or (self.AP[1] <= 0 or self.AP[3] >= 850):
+                if Level == 16:
+                    self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
+                    self.canvas.move(self.id, 60, 60)
+                    self.canvas.move(self.id, 680, 380)
 
             if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.AP[1]):
@@ -540,6 +550,13 @@ if sleep_mode == 'up':
                         move = 'no'
                         player.respawn()
                         goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 16:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
 
     class DangerStuff:
         def __init__(self, color, player, goal, canvas):
@@ -840,6 +857,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2060, 2060)
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 275)
+            if Level == 16:
+                self.canvas.move(self.id, 2000, 2000)
 
     class Portal:
         def __init__(self, color, canvas):
@@ -880,6 +899,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 2060, 2060)
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 85)
+            if Level == 16:
+                self.canvas.move(self.id, 2000, 2000)
 
         def Move(self):
             global x_spot, y_spot
@@ -940,6 +961,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 1440, 35)
                 self.canvas.move(self.id, 0, 150)
+            if Level == 16:
+                self.canvas.move(self.id, 2000, 2000)
 
     class WallY:
         def __init__(self, color, wall, player, canvas):
@@ -1123,6 +1146,8 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, 0, (420 - 35) * -1)
                 self.canvas.move(self.id, 0, 600)
+            if Level == 16:
+                self.canvas.move(self.id, 2000, 2000)
 
     class WallDay:
         def __init__(self, color, player, enemy, canvas):
@@ -1152,6 +1177,8 @@ if sleep_mode == 'up':
             if Level == 15:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 415)
+            if Level == 16:
+                self.canvas.move(self.id, 2000, 2000)
 
     class Lava:
         def __init__(self, color, player, canvas):
@@ -1191,6 +1218,12 @@ if sleep_mode == 'up':
                 #self.y = 18.75
                 #self.x = 0
             self.canvas.move(self.id, 0, 0)
+
+    class Light:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            #self.id = canvas.create_rectangle()
+            #rest over here: 6:32
 
     # we make the stuff here:
     if (Level in levels):
