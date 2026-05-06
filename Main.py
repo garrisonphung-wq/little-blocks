@@ -264,6 +264,7 @@ if sleep_mode == 'up':
                             regwall.check()
                             wallday.Check()
                             lava.Check()
+                            light.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -1222,8 +1223,84 @@ if sleep_mode == 'up':
     class Light:
         def __init__(self, color, canvas):
             self.id = canvas
-            #self.id = canvas.create_rectangle()
-            #rest over here: 6:32
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.choice = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.LP = self.canvas.coords(self.id)
+            self.Lx = self.LP[2]
+            self.Ly = self.LP[1]
+            self.L1x = self.LP[0]
+            self.L1y = self.LP[3]
+            print(f'{self.LP[2]}, {self.LP[3]}')
+
+            if Level == 16:
+                if self.LP[0] <= 0:
+                    self.choice = random.randint(0, 2)
+                    self.canvas.move(self.id, 0, 0)
+                    if self.choice == 0:
+                        self.x = 4
+                        self.y = 4
+                    elif self.choice == 1:
+                        self.x = 4
+                        self.y = 0
+                    elif self.choice == 2:
+                        self.y = -4
+                        self.x = 4
+                elif self.LP[2] >= 1440:
+                    self.choice = random.randint(0, 2)
+                    self.canvas.move(self.id, 0, 0)
+                    if self.choice == 0:
+                        self.x = -4
+                        self.y = 4
+                    elif self.choice == 1:
+                        self.x = -4
+                        self.y = 0
+                    elif self.choice == 2:
+                        self.y = -4
+                        self.x = -4
+                elif self.LP[1] <= 0:
+                    self.choice = random.randint(0, 2)
+                    self.canvas.move(self.id, 0, 0)
+                    if self.choice == 0:
+                        self.x = -4
+                        self.y = 4
+                    elif self.choice == 1:
+                        self.x = 0
+                        self.y = 4
+                    elif self.choice == 2:
+                        self.y = 4
+                        self.x = 4
+                elif self.LP[3] >= 850:
+                    self.choice = random.randint(0, 2)
+                    self.canvas.move(self.id, 0, 0)
+                    if self.choice == 0:
+                        self.x = -4
+                        self.y = -4
+                    elif self.choice == 1:
+                        self.x = 0
+                        self.y = -4
+                    elif self.choice == 2:
+                        self.y = -4
+                        self.x = 4
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            self.RanX = [-4, 4]
+            self.RanY = [-4, 4]
+            if Level == 16:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.RanX)
+                self.y = random.choice(self.RanY)
+                self.x = 4
+                self.y = 0
 
     # we make the stuff here:
     if (Level in levels):
@@ -1244,6 +1321,7 @@ if sleep_mode == 'up':
         regwall = RegWall("#646464", player, enemy, canvas)
         wallday = WallDay('#646464', player, enemy, canvas)
         lava = Lava('coral', player, canvas)
+        light = Light("#DAFFFF", canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -1276,6 +1354,7 @@ if sleep_mode == 'up':
             regwall.draw()
             wallday.draw()
             lava.draw()
+            light.draw()
             Window.update_idletasks()
             Window.update()
 
