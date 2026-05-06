@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 1 #random.randint(1, 25)
+    Level = 18 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -85,6 +85,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 750)
                 self.visible = True
 
+            if Level == 18:
+                self.canvas.move(self.id, (680 - 60) * -1, 0)
+
             # it detects the keys you press then makes the player move
             if self.move == 'yes':
                 self.canvas.bind_all('<KeyPress-Left>', self.left)
@@ -128,6 +131,9 @@ if sleep_mode == 'up':
             self.y = 0
             self.canvas.move(self.id, self.position[2] * -1 + 60, self.position[3] * -1 + 60)
             self.canvas.move(self.id, 680, 750)
+            if Level == 18:
+                self.canvas.move(self.id, -680, -750)
+                self.canvas.move(self.id, 0, 750)
 
         def teleport(self):
             self.x = 0
@@ -179,7 +185,7 @@ if sleep_mode == 'up':
             self.x = 0
             if self.y <= -8:
                 self.y = -4
-
+            
         def down(self, evt):
             self.y = self.y + 4
             self.x = 0
@@ -1024,7 +1030,8 @@ if sleep_mode == 'up':
             if Level == 13:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 664, 0)
-
+            elif Level == 18:
+                self.Check()
 
         def draw(self):
             self.canvas.move(self.id, self.x, self.y)
@@ -1033,6 +1040,7 @@ if sleep_mode == 'up':
             self.Yx = self.YP[1]
             self.Y1x = self.YP[0]
             self.Y1y = self.YP[3]
+            print(f'{self.YP[0]}, {self.YP[1]}')
 
             if self.YP[0] <= 0 or self.YP[2] >= 1435:
                 self.x = self.x * -1
@@ -1056,6 +1064,15 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -4000, -4000)
                 self.canvas.move(self.id, 1400, 0)
                 self.x = -2
+            if Level == 18:
+                self.canvas.move(self.id, -2060, -2060)
+                self.canvas.move(self.id, -818, 60)
+                self.canvas.move(self.id, 818, 0)
+                self.canvas.move(self.id, -854, 0)
+                self.canvas.move(self.id, 88, 0)
+                self.canvas.move(self.id, -88, 0)
+                self.canvas.move(self.id, 914, 0)
+                self.x = 4
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -1070,6 +1087,9 @@ if sleep_mode == 'up':
             self.y = 0
             if Level == 13:
                 self.canvas.move(self.id, 670 + 76, 0)
+            elif Level == 18:
+                self.canvas.move(self.id, 0, 0)
+                self.Check()
             else:
                 self.canvas.move(self.id, 2000, 2000)
 
@@ -1080,6 +1100,7 @@ if sleep_mode == 'up':
             self.Ny = self.NP[1]
             self.N1x = self.NP[0]
             self.N1y = self.NP[3]
+            print(f'{self.NP[0]}, {self.NP[1]}')
             if self.NP[0] <= 0 or self.NP[2] >= 1440 and Level == 15:
                 self.x = self.x * -1
 
@@ -1171,7 +1192,6 @@ if sleep_mode == 'up':
             self.Ry = self.RP[1]
             self.R1x = self.RP[0]
             self.R1y = self.RP[3]
-            print(f'{self.RP[0]}, {self.RP[1]}')
 
             if ((self.RP[0] <= self.player.Px) and (self.R1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.RP[1]):
@@ -1283,7 +1303,6 @@ if sleep_mode == 'up':
             self.Ly = self.LP[1]
             self.L1x = self.LP[0]
             self.L1y = self.LP[3]
-            print(f'{self.LP[2]}, {self.LP[3]}')
 
             if Level == 16:
                 if self.LP[0] <= 0:
