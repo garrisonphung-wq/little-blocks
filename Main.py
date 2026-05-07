@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 18 #random.randint(1, 25)
+    Level = 1 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -1072,7 +1072,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 88, 0)
                 self.canvas.move(self.id, -88, 0)
                 self.canvas.move(self.id, 914, 0)
-                self.x = 4
+                self.canvas.move(self.id, -300, 0)
+                self.x = 0
 
         def Gone(self):
             self.canvas.move(self.id, 2000, 2000)
@@ -1287,13 +1288,14 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, 0, 0)
 
     class Light:
-        def __init__(self, color, canvas):
+        def __init__(self, color, player, canvas):
             self.id = canvas
             self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
             self.x = 0
             self.y = 0
             self.choice = 0
             self.canvas = canvas
+            self.player = player
             self.canvas.move(self.id, 2000, 2000)
 
         def draw(self):
@@ -1354,6 +1356,12 @@ if sleep_mode == 'up':
                         self.y = -4
                         self.x = 4
 
+            if ((self.LP[0] <= self.player.Px) and (self.L1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.LP[1]):
+                    if not (self.player.position[0] >= self.LP[2]):
+                        move = 'no'
+                        player.freeze()
+
         def Check(self):
             self.x = 0
             self.y = 0
@@ -1391,7 +1399,7 @@ if sleep_mode == 'up':
         regwall = RegWall("#646464", player, enemy, canvas)
         wallday = WallDay('#646464', player, enemy, canvas)
         lava = Lava('coral', player, canvas)
-        light = Light("#DAFFFF", canvas)
+        light = Light("#DAFFFF", player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
