@@ -86,7 +86,7 @@ if sleep_mode == 'up':
                 self.visible = True
 
             if Level == 18:
-                self.canvas.move(self.id, (680 - 60) * -1, 0)
+                self.canvas.move(self.id, 0, 0)
 
             # it detects the keys you press then makes the player move
             if self.move == 'yes':
@@ -132,8 +132,8 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, self.position[2] * -1 + 60, self.position[3] * -1 + 60)
             self.canvas.move(self.id, 680, 750)
             if Level == 18:
-                self.canvas.move(self.id, -680, -750)
-                self.canvas.move(self.id, 0, 750)
+                self.canvas.move(self.id, 0, 0)
+                self.canvas.move(self.id, 0, 0)
 
         def teleport(self):
             self.x = 0
@@ -268,6 +268,10 @@ if sleep_mode == 'up':
                             wall.Check()
                             wally.Check()
                             walln.Check()
+                            wallt.Check()
+                            wallk.Check()
+                            wallj.Check()
+                            wallv.Check()
                             regwall.check()
                             wallday.Check()
                             lava.Check()
@@ -569,6 +573,10 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380)
+            if Level == 18:
+                self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
 
     class DangerStuff:
         def __init__(self, color, player, goal, canvas):
@@ -665,6 +673,10 @@ if sleep_mode == 'up':
             if Level == 16:
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 680, 380)
+            if Level == 18:
+                self.canvas.move(self.id, self.TP[2] * -1, self.TP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
 
     class COIN:
         def __init__(self, color, player, goal, canvas):
@@ -1073,6 +1085,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -88, 0)
                 self.canvas.move(self.id, 914, 0)
                 self.canvas.move(self.id, -300, 0)
+                self.canvas.move(self.id, -400, 0)
+                self.canvas.move(self.id, 2000, 2000)
                 self.x = 0
 
         def Gone(self):
@@ -1101,7 +1115,6 @@ if sleep_mode == 'up':
             self.Ny = self.NP[1]
             self.N1x = self.NP[0]
             self.N1y = self.NP[3]
-            print(f'{self.NP[0]}, {self.NP[1]}')
             if self.NP[0] <= 0 or self.NP[2] >= 1440 and Level == 15:
                 self.x = self.x * -1
 
@@ -1379,6 +1392,173 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 2000, 2000)
 
+    class WallT:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 18:
+                self.Check()
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.TP = self.canvas.coords(self.id)
+            self.Tx = self.TP[2]
+            self.Ty = self.TP[1]
+            self.T1x = self.TP[0]
+            self.T1y = self.TP[3]
+
+            if ((self.TP[0] <= self.player.Px) and (self.T1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.TP[1]):
+                    if not (self.player.position[0] >= self.TP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 18:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 600, 0)
+                self.x = 1
+                self.y = 0
+
+        def Stop(self):
+            if Level == 18:
+                self.x = 0
+
+    class WallK:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 18:
+                self.Check()
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.KP = self.canvas.coords(self.id)
+            self.Kx = self.KP[2]
+            self.Ky = self.KP[1]
+            self.K1x = self.KP[0]
+            self.K1y = self.KP[3]
+
+            if self.KP[2] >= 1440 and Level == 18:
+                self.x = 0
+                wallt.Stop()
+                wallj.Go()
+                wallv.Go()
+
+            if ((self.KP[0] <= self.player.Px) and (self.K1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.KP[1]):
+                    if not (self.player.position[0] >= self.KP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 18:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 810, 0)
+                self.x = 1
+                self.y = 0
+
+    class WallJ:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 18:
+                self.Check()
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.JP = self.canvas.coords(self.id)
+            self.Jx = self.JP[2]
+            self.Jy = self.JP[1]
+            self.J1x = self.JP[0]
+            self.J1y = self.JP[3]
+            if self.JP[1] <= 0 and Level == 18:
+                self.y = 0
+                wallv.Stop()
+
+            if ((self.JP[0] <= self.player.Px) and (self.J1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.JP[1]):
+                    if not (self.player.position[0] >= self.JP[2]):
+                        player.respawn()
+                        goal.position()
+                
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 18:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 700)
+                self.x = 0
+                self.y = 0
+        
+        def Go(self):
+            if Level == 18:
+                self.y = -1
+
+
+    class WallV:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 18:
+                self.Check()
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.VP = self.canvas.coords(self.id)
+            self.Vx = self.VP[2]
+            self.Vy = self.VP[1]
+            self.V1x = self.VP[0]
+            self.V1y = self.VP[3]
+
+            if ((self.VP[0] <= self.player.Px) and (self.V1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.VP[1]):
+                    if not (self.player.position[0] >= self.VP[2]):
+                        player.respawn()
+                        goal.position()
+                
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 18:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 910)
+                self.x = 0
+                self.y = 0
+        
+        def Go(self):
+            if Level == 18:
+                self.y = -1
+
+        def Stop(self):
+            if Level == 18:
+                self.y = 0
+
+
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -1390,12 +1570,16 @@ if sleep_mode == 'up':
         enemy = Enemy(red, 2, player, goal, canvas)
         enemyp = EnemyH(red, player, goal, canvas)
         weird = Weird('red', player, canvas)
-        weirdo = Weirdo('brown', player, canvas)
+        weirdo = Weirdo('red', player, canvas)
         coin = COIN(yellow_green, player, goal, canvas)
         jelly = Jelly("#FA7BAE", player, enemy, goal, canvas)
         wall = Wall("#000000", player, enemy, canvas)
         wally = WallY('red', wall, player, canvas)
         walln = WallN('red', player, canvas)
+        wallt = WallT('red', player, canvas)
+        wallk = WallK('red', player, canvas)
+        wallj = WallJ('red', player, canvas)
+        wallv = WallV('red', player, canvas)
         regwall = RegWall("#646464", player, enemy, canvas)
         wallday = WallDay('#646464', player, enemy, canvas)
         lava = Lava('coral', player, canvas)
@@ -1430,6 +1614,10 @@ if sleep_mode == 'up':
             wall.draw()
             wally.draw()
             walln.draw()
+            wallt.draw()
+            wallk.draw()
+            wallj.draw()
+            wallv.draw()
             regwall.draw()
             wallday.draw()
             lava.draw()
