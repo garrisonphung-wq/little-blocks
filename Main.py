@@ -169,27 +169,27 @@ if sleep_mode == 'up':
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 4
+            self.x = self.x - 100
             self.y = 0
-            if self.x <= -8:
+            if self.x <= -500:
                 self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 4
+            self.x = self.x + 100
             self.y = 0
-            if self.x >= 8:
+            if self.x >= 500:
                 self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 4
+            self.y = self.y - 100
             self.x = 0
-            if self.y <= -8:
+            if self.y <= -500:
                 self.y = -4
             
         def down(self, evt):
-            self.y = self.y + 4
+            self.y = self.y + 100
             self.x = 0
-            if self.y >= 8:
+            if self.y >= 500:
                 self.y = 4
 
         def Bounce(self):
@@ -276,6 +276,7 @@ if sleep_mode == 'up':
                             wallday.Check()
                             lava.Check()
                             light.Check()
+                            worm.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -1052,7 +1053,6 @@ if sleep_mode == 'up':
             self.Yx = self.YP[1]
             self.Y1x = self.YP[0]
             self.Y1y = self.YP[3]
-            print(f'{self.YP[0]}, {self.YP[1]}')
 
             if self.YP[0] <= 0 or self.YP[2] >= 1435:
                 self.x = self.x * -1
@@ -1426,6 +1426,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 600, 0)
                 self.x = 1
                 self.y = 0
+            if Level == 19:
+                self.canvas.move(self.id, 2000, 2000)
 
         def Stop(self):
             if Level == 18:
@@ -1471,6 +1473,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 810, 0)
                 self.x = 1
                 self.y = 0
+            if Level == 19:
+                self.canvas.move(self.id, 2000, 2000)
 
     class WallJ:
         def __init__(self, color, player, canvas):
@@ -1509,6 +1513,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 700)
                 self.x = 0
                 self.y = 0
+            if Level == 19:
+                self.canvas.move(self.id, 2000, 2000)
         
         def Go(self):
             if Level == 18:
@@ -1549,6 +1555,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 910)
                 self.x = 0
                 self.y = 0
+            if Level == 19:
+                self.canvas.move(self.id, 2000, 2000)
         
         def Go(self):
             if Level == 18:
@@ -1558,6 +1566,47 @@ if sleep_mode == 'up':
             if Level == 18:
                 self.y = 0
 
+    class Worm:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            self.Time = 0
+            self.Random = 0
+
+        def draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.WP = self.canvas.coords(self.id)
+            self.Wx = self.WP[2]
+            self.Wy = self.WP[1]
+            self.W1x = self.WP[0]
+            self.W1y = self.WP[3]
+            if Level == 19:
+                self.Time = self.Time + 1
+                print(self.Time)
+                if self.Time >= self.Random:
+                    self.Random = random.randint(10, 25)
+                    self.Time = 0
+                    self.canvas.move(self.id, (self.WP[2]) * -1, (self.WP[3]) * -1)
+                    self.canvas.move(self.id, random.randint(1, 1440 - 35), random.randint(1, 850 - 35))
+
+            if ((self.WP[0] <= self.player.Px) and (self.W1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.WP[1]):
+                    if not (self.player.position[0] >= self.WP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0 
+            if Level == 19:
+                self.Random = random.randint(10, 25)
+                self.Time = 0
+                self.canvas.move(self.id, -2000, -2000)
 
     # we make the stuff here:
     if (Level in levels):
@@ -1584,6 +1633,7 @@ if sleep_mode == 'up':
         wallday = WallDay('#646464', player, enemy, canvas)
         lava = Lava('coral', player, canvas)
         light = Light("#DAFFFF", player, canvas)
+        worm = Worm("#8E5300", player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -1622,6 +1672,7 @@ if sleep_mode == 'up':
             wallday.draw()
             lava.draw()
             light.draw()
+            worm.draw()
             Window.update_idletasks()
             Window.update()
 
