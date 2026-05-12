@@ -169,27 +169,27 @@ if sleep_mode == 'up':
 
         # example: if the left key is press, the player will go left
         def left(self, evt):
-            self.x = self.x - 100
+            self.x = self.x - 4
             self.y = 0
-            if self.x <= -500:
+            if self.x <= -8:
                 self.x = -4
 
         def right(self, evt):
-            self.x = self.x + 100
+            self.x = self.x + 4
             self.y = 0
-            if self.x >= 500:
+            if self.x >= 8:
                 self.x = 4
 
         def up(self, evt):
-            self.y = self.y - 100
+            self.y = self.y - 4
             self.x = 0
-            if self.y <= -500:
+            if self.y <= -8:
                 self.y = -4
             
         def down(self, evt):
-            self.y = self.y + 100
+            self.y = self.y + 4
             self.x = 0
-            if self.y >= 500:
+            if self.y >= 8:
                 self.y = 4
 
         def Bounce(self):
@@ -425,6 +425,12 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 0, 380 + (380 / 2))
                 self.x = 18
                 self.y = 0
+            elif Level == 19:
+                self.canvas.move(self.id, self.EnemyP[2] * -1, self.EnemyP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = 18
+                self.y = 11
             else:
                 self.x = 0
                 self.y = 0
@@ -1319,7 +1325,7 @@ if sleep_mode == 'up':
             self.L1x = self.LP[0]
             self.L1y = self.LP[3]
 
-            if Level == 16:
+            if Level == 16 or Level == 19:
                 if self.LP[0] <= 0:
                     self.choice = random.randint(0, 2)
                     self.canvas.move(self.id, 0, 0)
@@ -1391,6 +1397,10 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 2000, 2000)
+            if Level == 18:
+                self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
 
     class WallT:
         def __init__(self, color, player, canvas):
@@ -1577,6 +1587,7 @@ if sleep_mode == 'up':
             self.canvas.move(self.id, 2000, 2000)
             self.Time = 0
             self.Random = 0
+            self.Pick = 0
 
         def draw(self):
             self.canvas.move(self.id, self.x, self.y)
@@ -1590,9 +1601,22 @@ if sleep_mode == 'up':
                 print(self.Time)
                 if self.Time >= self.Random:
                     self.Random = random.randint(10, 25)
+                    self.Pick = random.randint(1, 4)
                     self.Time = 0
                     self.canvas.move(self.id, (self.WP[2]) * -1, (self.WP[3]) * -1)
                     self.canvas.move(self.id, random.randint(1, 1440 - 35), random.randint(1, 850 - 35))
+                    if self.Pick == 1:
+                        self.x = 50
+                        self.y = 0
+                    elif self.Pick == 2:
+                        self.x = -50
+                        self.y = 0
+                    elif self.Pick == 3:
+                        self.x = 0
+                        self.y = 50
+                    else:
+                        self.x = 0
+                        self.y = -50
 
             if ((self.WP[0] <= self.player.Px) and (self.W1y >= self.player.Py)):
                 if not (self.player.position[3] <= self.WP[1]):
@@ -1603,10 +1627,23 @@ if sleep_mode == 'up':
         def Check(self):
             self.x = 0
             self.y = 0 
+            self.Pick = random.randint(1, 4)
             if Level == 19:
                 self.Random = random.randint(10, 25)
                 self.Time = 0
                 self.canvas.move(self.id, -2000, -2000)
+                if self.Pick == 1:
+                    self.x = 10
+                    self.y = 0
+                elif self.Pick == 2:
+                    self.x = -10
+                    self.y = 0
+                elif self.Pick == 3:
+                    self.x = 0
+                    self.y = 10
+                else:
+                    self.x = 0
+                    self.y = -10
 
     # we make the stuff here:
     if (Level in levels):
