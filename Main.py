@@ -514,6 +514,14 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380 / 2)
                 self.x = -67.5
+            elif Level == 19:
+                self.x = 0
+                self.y = 0
+                self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = 30
+                self.y = 19
             else:
                 self.canvas.move(self.id, self.HPos[2] * -1, self.HPos[3] * -1)
                 self.canvas.move(self.id, 50, 50)
@@ -553,12 +561,12 @@ if sleep_mode == 'up':
             self.Ay = self.AP[1]
             self.A1x = self.AP[0]
             self.A1y = self.AP[3]
-            if Level == 16 or Level == 17:
+            if Level == 16 or Level == 17 or Level == 19:
                 self.x = random.randint(-100, 100)
                 self.y = random.randint(-100, 100)
 
             if (self.AP[0] <= 0 or self.AP[2] >= 1440) or (self.AP[1] <= 0 or self.AP[3] >= 850):
-                if Level == 16 or Level == 17:
+                if Level == 16 or Level == 17 or Level == 19:
                     self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
                     self.canvas.move(self.id, 60, 60)
                     self.canvas.move(self.id, 680, 380)
@@ -584,6 +592,10 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 2000, 2000)
+            if Level == 19:
+                self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
 
     class DangerStuff:
         def __init__(self, color, player, goal, canvas):
@@ -1400,7 +1412,15 @@ if sleep_mode == 'up':
             if Level == 18:
                 self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
+            if Level == 19:
+                self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.RanX)
+                self.y = random.choice(self.RanY)
+                self.x = 4
+                self.y = 0
 
     class WallT:
         def __init__(self, color, player, canvas):
