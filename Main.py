@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 1 #random.randint(1, 25)
+    Level = 20 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -277,6 +277,8 @@ if sleep_mode == 'up':
                             lava.Check()
                             light.Check()
                             worm.Check()
+                            spearx.Check()
+                            speary.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -1327,7 +1329,10 @@ if sleep_mode == 'up':
             self.choice = 0
             self.canvas = canvas
             self.player = player
+            self.LP = self.canvas.coords(self.id)
             self.canvas.move(self.id, 2000, 2000)
+            if Level == 20:
+                self.Check()
 
         def draw(self):
             self.canvas.move(self.id, self.x, self.y)
@@ -1337,7 +1342,7 @@ if sleep_mode == 'up':
             self.L1x = self.LP[0]
             self.L1y = self.LP[3]
 
-            if Level == 16 or Level == 19:
+            if Level == 16 or Level == 19 or Level == 20:
                 if self.LP[0] <= 0:
                     self.choice = random.randint(0, 2)
                     self.canvas.move(self.id, 0, 0)
@@ -1421,6 +1426,14 @@ if sleep_mode == 'up':
                 self.y = random.choice(self.RanY)
                 self.x = 4
                 self.y = 0
+            if Level == 20:
+                self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.RanX)
+                self.y = random.choice(self.RanY)
+            if Level == 21:
+                self.canvas.move(self.id, 2000, 2000)
 
     class WallT:
         def __init__(self, color, player, canvas):
@@ -1665,6 +1678,90 @@ if sleep_mode == 'up':
                     self.x = 0
                     self.y = -10
 
+    class SpearX:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 20:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.SP = self.canvas.coords(self.id)
+            self.Sx = self.SP[2]
+            self.Sy = self.SP[1]
+            self.S1x = self.SP[0]
+            self.S1y = self.SP[3]
+            print(self.SP[3])
+
+            if Level == 20 and self.SP[3] >= 850:
+                self.canvas.move(self.id, self.SP[2] * -1, self.SP[3] * -1)
+                self.canvas.move(self.id, random.randint(1, (1440 - 60)), 0)
+                self.y = 75
+
+            if ((self.SP[0] <= self.player.Px) and (self.S1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.SP[1]):
+                    if not (self.player.position[0] >= self.SP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 20:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, random.randint(1, (1440 - 60)), 0)
+                self.y = 75
+            if Level == 21:
+                self.canvas.move(self.id, 2000, 2000)
+
+    class SpearY:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 20:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.SP = self.canvas.coords(self.id)
+            self.Sx = self.SP[2]
+            self.Sy = self.SP[1]
+            self.S1x = self.SP[0]
+            self.S1y = self.SP[3]
+            print(self.SP[3])
+
+            if Level == 20 and self.SP[2] >= 1440:
+                self.canvas.move(self.id, self.SP[2] * -1, self.SP[3] * -1)
+                self.canvas.move(self.id, 0, random.randint(1, (850 - 60)))
+                self.x = 75
+
+            if ((self.SP[0] <= self.player.Px) and (self.S1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.SP[1]):
+                    if not (self.player.position[0] >= self.SP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 20:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, random.randint(1, (850 - 60)))
+                self.x = 75
+            if Level == 21:
+                self.canvas.move(self.id, 2000, 2000)
+
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -1691,6 +1788,8 @@ if sleep_mode == 'up':
         lava = Lava('coral', player, canvas)
         light = Light("#DAFFFF", player, canvas)
         worm = Worm("#8E5300", player, canvas)
+        spearx = SpearX("#FF4D00", player, canvas)
+        speary = SpearY("#FF0D00", player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -1730,6 +1829,8 @@ if sleep_mode == 'up':
             lava.draw()
             light.draw()
             worm.draw()
+            spearx.Draw()
+            speary.Draw()
             Window.update_idletasks()
             Window.update()
 
