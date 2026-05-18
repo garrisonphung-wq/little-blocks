@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 20 #random.randint(1, 25)
+    Level = 21 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -279,6 +279,12 @@ if sleep_mode == 'up':
                             worm.Check()
                             spearx.Check()
                             speary.Check()
+                            swichwalla.Check()
+                            swicha.Check()
+                            swichwallb.Check()
+                            swichb.Check()
+                            swichwallc.Check()
+                            swichc.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -1331,7 +1337,7 @@ if sleep_mode == 'up':
             self.player = player
             self.LP = self.canvas.coords(self.id)
             self.canvas.move(self.id, 2000, 2000)
-            if Level == 20:
+            if Level == 20 or Level == 21:
                 self.Check()
 
         def draw(self):
@@ -1342,7 +1348,7 @@ if sleep_mode == 'up':
             self.L1x = self.LP[0]
             self.L1y = self.LP[3]
 
-            if Level == 16 or Level == 19 or Level == 20:
+            if Level == 16 or Level == 19 or Level == 20 or Level == 21:
                 if self.LP[0] <= 0:
                     self.choice = random.randint(0, 2)
                     self.canvas.move(self.id, 0, 0)
@@ -1433,7 +1439,11 @@ if sleep_mode == 'up':
                 self.x = random.choice(self.RanX)
                 self.y = random.choice(self.RanY)
             if Level == 21:
-                self.canvas.move(self.id, 2000, 2000)
+                self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 680, 380)
+                self.x = random.choice(self.RanX)
+                self.y = random.choice(self.RanY)
 
     class WallT:
         def __init__(self, color, player, canvas):
@@ -1762,6 +1772,235 @@ if sleep_mode == 'up':
             if Level == 21:
                 self.canvas.move(self.id, 2000, 2000)
 
+    class SwichWallA:
+        # X swich wall:
+        def __init__(self, color, width, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 1440 + 12, 60, outline=color, width=width)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            # it Might be all
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -20, 0)
+                self.canvas.move(self.id, 0, 380)
+
+    class SwichA:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.Time = 0
+            self.MaxTime = 25
+            self.Pick = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+            else:
+                self.canvas.move(self.id, 0, 0)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.MaxTime = self.MaxTime
+            
+            if Level == 21:
+                self.Time = self.Time + 1
+                print(self.Time)
+                if self.Time >= self.MaxTime:
+                    self.Time = 0
+                    if self.Pick == 0:
+                        self.Pick = 1
+                        self.canvas.move(self.id, 2000, 2000)
+                    else:
+                        self.Pick = 0
+                        self.canvas.move(self.id, -2000, -2000)
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 25)
+                self.canvas.move(self.id, 0, 380)
+
+    class SwichWallB:
+        # X swich wall:
+        def __init__(self, color, width, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 1440 + 12, 60, outline=color, width=width)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            # it Might be all
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -20, 0)
+                self.canvas.move(self.id, 0, 380 + (380 / 2))
+
+    class SwichB:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.Time = 0
+            self.MaxTime = 25
+            self.Pick = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+            else:
+                self.canvas.move(self.id, 0, 0)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.MaxTime = self.MaxTime
+            
+            if Level == 21:
+                self.Time = self.Time + 1
+                print(self.Time)
+                if self.Time >= self.MaxTime:
+                    self.Time = 0
+                    if self.Pick == 0:
+                        self.Pick = 1
+                        self.canvas.move(self.id, 2000, 2000)
+                    else:
+                        self.Pick = 0
+                        self.canvas.move(self.id, -2000, -2000)
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 25)
+                self.canvas.move(self.id, 0, 380 + (380 / 2))
+
+    class SwichWallC:
+        # X swich wall:
+        def __init__(self, color, width, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 1440 + 12, 60, outline=color, width=width)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            # it Might be all
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, -20, 0)
+                self.canvas.move(self.id, 0, 380 - (380 / 2))
+
+    class SwichC:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.Time = 0
+            self.MaxTime = 25
+            self.Pick = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 21:
+                self.Check()
+            else:
+                self.canvas.move(self.id, 0, 0)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.MaxTime = self.MaxTime
+            
+            if Level == 21:
+                self.Time = self.Time + 1
+                print(self.Time)
+                if self.Time >= self.MaxTime:
+                    self.Time = 0
+                    if self.Pick == 0:
+                        self.Pick = 1
+                        self.canvas.move(self.id, 2000, 2000)
+                    else:
+                        self.Pick = 0
+                        self.canvas.move(self.id, -2000, -2000)
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 21:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 25)
+                self.canvas.move(self.id, 0, 380 - (380 / 2))
+
+
     # we make the stuff here:
     if (Level in levels):
         wavestarter = WaveStarter("#FFFFFF", canvas)
@@ -1790,6 +2029,12 @@ if sleep_mode == 'up':
         worm = Worm("#8E5300", player, canvas)
         spearx = SpearX("#FF4D00", player, canvas)
         speary = SpearY("#FF0D00", player, canvas)
+        swichwalla = SwichWallA('red', 4, canvas)
+        swicha = SwichA('red', player, canvas)
+        swichwallb = SwichWallB('red', 4, canvas)
+        swichb = SwichB('red', player, canvas)
+        swichwallc = SwichWallC('red', 4, canvas)
+        swichc = SwichC('red', player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -1831,6 +2076,12 @@ if sleep_mode == 'up':
             worm.draw()
             spearx.Draw()
             speary.Draw()
+            swichwalla.Draw()
+            swicha.Draw()
+            swichwallb.Draw()
+            swichb.Draw()
+            swichwallc.Draw()
+            swichc.Draw()
             Window.update_idletasks()
             Window.update()
 
