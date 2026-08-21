@@ -12,7 +12,7 @@ if sleep_mode == 'up':
     WIN_WIDTH = 1500
     WIN_HEIGHT = 1200
     levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-    Level = 22 #random.randint(1, 25)
+    Level = 1 #random.randint(1, 25)
     MAX_LEVEL = 25
     light_green = "#51FF00"
     dark_green = "#006E02"
@@ -295,6 +295,24 @@ if sleep_mode == 'up':
                             swiched.Check()
                             swichenemye.Check()
                             swichee.Check()
+                            worldport.Check()
+                            blocker.Check()
+                            worldenemybase.Check()
+                            worldenemy.Check()
+                            laserbasea.Check()
+                            lasera.Check()
+                            laserbaseb.Check()
+                            laserb.Check()
+                            laserbasec.Check()
+                            laserc.Check()
+                            laserbased.Check()
+                            laserd.Check()
+                            laserbasee.Check()
+                            lasere.Check()
+                            laserbasef.Check()
+                            laserf.Check()
+                            laserbaseg.Check()
+                            laserg.Check()
                             Check()
                             if Level in levels and True:
                                 self.x = 0
@@ -614,6 +632,14 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
                 self.canvas.move(self.id, 60, 60)
                 self.canvas.move(self.id, 680, 380)
+            if Level == 20:
+                self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
+            else:
+                self.canvas.move(self.id, self.AP[2] * -1, self.AP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
 
     class DangerStuff:
         def __init__(self, color, player, goal, canvas):
@@ -1454,6 +1480,10 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.RanX)
                 self.y = random.choice(self.RanY)
+            else:
+                self.canvas.move(self.id, self.LP[2] * -1, self.LP[3] * -1)
+                self.canvas.move(self.id, 60, 60)
+                self.canvas.move(self.id, 2000, 2000)
 
     class WallT:
         def __init__(self, color, player, canvas):
@@ -1805,6 +1835,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, -20, 0)
                 self.canvas.move(self.id, 0, 380)
+            else:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichA:
         def __init__(self, color, player, canvas):
@@ -1857,6 +1889,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 25)
                 self.canvas.move(self.id, 0, 380)
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
 
     class SwichWallB:
         # X swich wall:
@@ -1881,6 +1916,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, -20, 0)
                 self.canvas.move(self.id, 0, 380 + (380 / 2))
+            else:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichB:
         def __init__(self, color, player, canvas):
@@ -1933,6 +1970,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 25)
                 self.canvas.move(self.id, 0, 380 + (380 / 2))
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
 
     class SwichWallC:
         # X swich wall:
@@ -1957,6 +1997,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, -20, 0)
                 self.canvas.move(self.id, 0, 380 - (380 / 2))
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
 
     class SwichC:
         def __init__(self, color, player, canvas):
@@ -2009,6 +2052,9 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, -2000, -2000)
                 self.canvas.move(self.id, 0, 25)
                 self.canvas.move(self.id, 0, 380 - (380 / 2))
+            else:
+                self.canvas.move(self.id, 2000, 2000)
+
 
     class SwichEnemyA:
         def __init__(self, color, width, canvas):
@@ -2039,6 +2085,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.XC)
                 self.y = random.choice(self.XC)
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEA:
         def __init__(self, color, player, swichenemya, canvas):
@@ -2093,6 +2141,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = self.swichenemya.x
                 self.y = self.swichenemya.y
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEnemyB:
         def __init__(self, color, width, canvas):
@@ -2123,6 +2173,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.XC)
                 self.y = random.choice(self.XC)
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEB:
         def __init__(self, color, player, swichenemyb, canvas):
@@ -2177,6 +2229,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = self.swichenemyb.x
                 self.y = self.swichenemyb.y
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEnemyC:
         def __init__(self, color, width, canvas):
@@ -2207,6 +2261,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.XC)
                 self.y = random.choice(self.XC)
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEC:
         def __init__(self, color, player, swichenemyc, canvas):
@@ -2261,6 +2317,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = self.swichenemyc.x
                 self.y = self.swichenemyc.y
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEnemyD:
         def __init__(self, color, width, canvas):
@@ -2291,6 +2349,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.XC)
                 self.y = random.choice(self.XC)
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichED:
         def __init__(self, color, player, swichenemyd, canvas):
@@ -2345,6 +2405,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = self.swichenemyd.x
                 self.y = self.swichenemyd.y
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEnemyE:
         def __init__(self, color, width, canvas):
@@ -2375,6 +2437,8 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = random.choice(self.XC)
                 self.y = random.choice(self.XC)
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
 
     class SwichEE:
         def __init__(self, color, player, swichenemye, canvas):
@@ -2429,6 +2493,1102 @@ if sleep_mode == 'up':
                 self.canvas.move(self.id, 680, 380)
                 self.x = self.swichenemye.x
                 self.y = self.swichenemye.y
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
+
+    class worldPort:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+                        if Level == 23:
+                            blocker.Gone()
+                            worldenemy.Come()
+                            laserbasea.Spawn()
+                            lasera.Spawn()
+                            laserbaseb.Spawn()
+                            laserb.Spawn()
+                            laserbasec.Spawn()
+                            laserc.Spawn()
+                            laserbased.Spawn()
+                            laserd.Spawn()
+                            laserbasee.Spawn()
+                            lasere.Spawn()
+                            laserbasef.Spawn()
+                            laserf.Spawn()
+                            laserbaseg.Spawn()
+                            laserg.Spawn()
+                            laserbaseh.Spawn()
+                            laserh.Spawn()
+                            laserbasei.Spawn()
+                            laseri.Spawn()
+                            laserbasej.Spawn()
+                            laserj.Spawn()
+                            laserbasek.Spawn()
+                            laserk.Spawn()
+                            laserbasel.Spawn()
+                            laserl.Spawn()
+                            laserx.Spawn()
+                            self.canvas.move(self.id, 2000, 2000)
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
+
+    class Blocker:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 25, 1440, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 380/2)
+
+        def Gone(self):
+            if Level == 23:
+                self.canvas.move(self.id, 2000, 2000)
+
+    class WorldEnemyBase:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            if Level == 23:
+                if self.AP[0] <= 0 or self.AP[2] >= 1440:
+                    self.x = self.x * -1
+                if self.AP[1] <= 0 or self.AP[3] >= 850:
+                    self.y = self.y * -1
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            self.XYC = [-30, -25, 25, 30] 
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 680, 380)
+                self.canvas.move(self.id, 2000, 2000)
+                #self.x = random.choice(self.XYC)
+                #self.y = random.choice(self.XYC)
+                self.x = 0
+                self.y = 0
+
+    class WorldEnemy:
+        def __init__(self, color, player, worldenemybase, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(25, 25, 60, 60, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.worldenemybase = worldenemybase
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            if Level == 23:
+                self.x = self.worldenemybase.x
+                self.y = self.worldenemybase.y
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            self.x = 0
+            self.y = 0
+            if Level == 23:
+                self.canvas.move(self.id, 680, 380)
+                self.canvas.move(self.id, 4000, 4000)
+
+        def Come(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+
+    class LaserBaseA:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 7, 0)
+
+    class LaserA:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 7, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseB:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 120, 0)
+
+    class LaserB:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 120, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseC:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 240, 0)
+
+    class LaserC:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 240, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseD:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 360, 0)
+
+    class LaserD:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 360, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseE:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480, 0)
+
+    class LaserE:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseF:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 120, 0)
+
+    class LaserF:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 120, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseG:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 240, 0)
+
+    class LaserG:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 240, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseH:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 360, 0)
+
+    class LaserH:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 360, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseI:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 480, 0)
+
+    class LaserI:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 480, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseJ:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 480 + 120, 0)
+
+    class LaserJ:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 480 + 120, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseK:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 480 + 240, 0)
+
+    class LaserK:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 480 + 240, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserBaseL:
+        def __init__(self, color, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, outline=color, width=4)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 2000, 2000)
+        
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 480 + 480 + 360, 0)
+
+    class LaserL:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 850, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.Time = 0
+            self.MT = 25
+            self.P = 0
+            self.Start = 0
+            self.canvas.move(self.id, 2000, 2000)
+            if Level == 23:
+                self.Check()
+
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+            self.Time = self.Time + 1
+
+            if Level == 23 and self.Start == 1:
+                if self.Time > self.MT:
+                    self.Time = 0
+                    self.MT = self.MT
+                    if self.P == 0:
+                        self.canvas.move(self.id, 2000, 2000)
+                        self.P = 1
+                    elif self.P == 1:
+                        self.canvas.move(self.id, -2000, -2000)
+                        self.P = 0
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+
+        def Check(self):
+            if Level == 23:
+                self.canvas.move(self.id, 480 + 480 + 360, 0)
+
+        def Spawn(self):
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.Start = 1
+
+    class LaserX:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 1440, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.canvas = canvas
+            self.player = player
+            self.canvas.move(self.id, 2000, 2000)
+        
+        def Draw(self):
+            self.canvas.move(self.id, self.x, self.y)
+            self.AP = self.canvas.coords(self.id)
+            self.Ax = self.AP[2]
+            self.Ay = self.AP[1]
+            self.A1x = self.AP[0]
+            self.A1y = self.AP[3]
+
+            if ((self.AP[0] <= self.player.Px) and (self.A1y >= self.player.Py)):
+                if not (self.player.position[3] <= self.AP[1]):
+                    if not (self.player.position[0] >= self.AP[2]):
+                        player.respawn()
+                        goal.position()
+        def Spawn(self):
+            self.x = 0
+            self.y = 0
+            if Level == 23:
+                self.canvas.move(self.id, -2000, -2000)
+                self.canvas.move(self.id, 0, 25)
+                self.canvas.move(self.id, 0, 100)
+
+    class Button:
+        def __init__(self, color, player, canvas):
+            self.id = canvas
+            self.id = canvas.create_rectangle(0, 0, 35, 35, fill=color, outline=color)
+            self.x = 0
+            self.y = 0
+            self.player = player
+            self.canvas = canvas
+            self.canvas.move(self.id, 2000, 2000)
 
     # we make the stuff here:
     if (Level in levels):
@@ -2474,6 +3634,35 @@ if sleep_mode == 'up':
         swiched = SwichED('red', player, swichenemyd, canvas)
         swichenemye = SwichEnemyE('red', 4, canvas)
         swichee = SwichEE('red', player, swichenemye, canvas)
+        worldport = worldPort("#00FC69", player, canvas)
+        blocker = Blocker('red', player, canvas)
+        worldenemybase = WorldEnemyBase('red', canvas)
+        worldenemy = WorldEnemy('red', player, worldenemybase, canvas)
+        laserbasea = LaserBaseA('red', canvas)
+        lasera = LaserA('red', player, canvas)
+        laserbaseb = LaserBaseB('red', canvas)
+        laserb = LaserB('red', player, canvas)
+        laserbasec = LaserBaseC('red', canvas)
+        laserc = LaserC('red', player, canvas)
+        laserbased = LaserBaseD('red', canvas)
+        laserd = LaserD('red', player, canvas)
+        laserbasee = LaserBaseE('red', canvas)
+        lasere = LaserE('red', player, canvas)
+        laserbasef = LaserBaseF('red', canvas)
+        laserf = LaserF('red', player, canvas)
+        laserbaseg = LaserBaseG('red', canvas)
+        laserg = LaserG('red', player, canvas)
+        laserbaseh = LaserBaseH('red', canvas)
+        laserh = LaserH('red', player, canvas)
+        laserbasei = LaserBaseI('red', canvas)
+        laseri = LaserI('red', player, canvas)
+        laserbasej = LaserBaseJ('red', canvas)
+        laserj = LaserJ('red', player, canvas)
+        laserbasek = LaserBaseK('red', canvas)
+        laserk = LaserK('red', player, canvas)
+        laserbasel = LaserBaseL('red', canvas)
+        laserl = LaserL('red', player, canvas)
+        laserx = LaserX('red', player, canvas)
         #goal = Goal(light_green, dangerstuff, enemy, coin, canvas)
         wavestarter = WaveStarter("#FFFFFF", canvas)
     
@@ -2531,6 +3720,35 @@ if sleep_mode == 'up':
             swiched.Draw()
             swichenemye.Draw()
             swichee.Draw()
+            worldport.Draw()
+            blocker.Draw()
+            worldenemybase.Draw()
+            worldenemy.Draw()
+            laserbasea.Draw()
+            lasera.Draw()
+            laserbaseb.Draw()
+            laserb.Draw()
+            laserbasec.Draw()
+            laserc.Draw()
+            laserbased.Draw()
+            laserd.Draw()
+            laserbasee.Draw()
+            lasere.Draw()
+            laserbasef.Draw()
+            laserf.Draw()
+            laserbaseg.Draw()
+            laserg.Draw()
+            laserbaseh.Draw()
+            laserh.Draw()
+            laserbasei.Draw()
+            laseri.Draw()
+            laserbasej.Draw()
+            laserj.Draw()
+            laserbasek.Draw()
+            laserk.Draw()
+            laserbasel.Draw()
+            laserl.Draw()
+            laserx.Draw()
             Window.update_idletasks()
             Window.update()
 
